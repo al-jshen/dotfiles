@@ -1,0 +1,5 @@
+remove Lock = Caps_Lock
+keycode 9 = grave asciitilde
+keycode 66 = Escape
+keycode 49 = 
+keycode 119 = Delete
