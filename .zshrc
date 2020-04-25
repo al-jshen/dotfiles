@@ -64,7 +64,6 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # | aliases | #
-alias gc='git clone'
 alias gp='git push -u origin master'
 alias gs='git status'
 alias ga='git add --all'
@@ -92,6 +91,11 @@ alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bac
 
 
 # | custom functions | #
+
+gc() {
+    git clone https://github.com/$1.git
+}
+
 kl() {
 	kill $(ps -aux |grep $1 |pid) > /dev/null 2>&1
 }
