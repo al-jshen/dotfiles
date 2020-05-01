@@ -242,7 +242,8 @@ endfunction
 
 " Theming
 set background=dark
-colorscheme one
+colorscheme nord-modified
+hi Normal guibg=NONE ctermbg=NONE
 
 
 " Rehighlight Semshi after colorscheme change
