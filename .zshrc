@@ -88,6 +88,8 @@ alias suspend='systemctl suspend'
 alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 15 - | sudo tee /etc/pacman.d/mirrorlist'
+alias texwatch='latexmk -pdf -pvc'
+alias carta='/home/js/builds/CARTA-v1.3-remote/carta'
 
 
 # | custom functions | #
@@ -128,6 +130,10 @@ pdftex() {
     bname=$(basename $1 .tex)
     bname+=".pdf"
     open $bname
+}
+
+vpn() {
+    sudo openvpn /etc/openvpn/$1.ovpn
 }
 
 stty -ixon

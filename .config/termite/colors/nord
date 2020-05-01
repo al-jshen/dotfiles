@@ -1,12 +1,3 @@
-[options]
-font = FontAwesome Regular 16
-font = Font Awesome 5 Free Regular 16
-font = Font Awesome 5 Free Solid 16
-font = Font Awesome 5 Free Brands Regular 16
-font = Hack Regular 15
-clickable_url = true
-dynamic_title = true
-
 # Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
 # Copyright (c) 2016-present Sven Greb <code@svengreb.de>
 
@@ -20,7 +11,8 @@ cursor_foreground = #2e3440
 
 foreground = #d8dee9
 foreground_bold = #d8dee9
-background = #23272e
+background = #2e3440
+
 highlight = #4c566a
 
 color0  = #3b4252
