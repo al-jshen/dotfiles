@@ -136,6 +136,8 @@ exec = playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}"
 format-prefix = "  "
 format-prefix-foreground = #1DB954
 label = %output%
+click-left = playerctl previous
+click-right = playerctl next
 
 [module/usage_cpu]
 type = internal/cpu
