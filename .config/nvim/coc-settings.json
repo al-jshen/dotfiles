@@ -1,0 +1,37 @@
+{
+    "python.jediEnabled": true,
+    "python.autoUpdateLanguageServer": true,
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "/home/js/.local/bin/flake8",
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "/home/js/.local/bin/pylint",
+
+	"rust-analyzer.completion.postfix.enable": true,
+	"rust-analyzer.updates.channel": "nightly",
+	"rust-analyzer.inlayHints.chainingHints": true,
+	"rust-analyzer.callInfo.full": true,
+
+    "suggest.autoTrigger": "always",
+    "suggest.triggerAfterInsertEnter": true,
+    "suggest.noselect": false,
+    "suggest.floatEnable": true,
+    "suggest.detailField": "preview",
+    "suggest.localityBonus": false,
+    "suggest.triggerCompletionWait": 50,
+	"suggest.timeout": 5000,
+    "suggest.acceptSuggestionOnCommitCharacter": true,
+
+    "diagnostic.messageTarget": "float",
+    "diagnostic.messageDelay": 10,
+    "diagnostic.maxWindowHeight": 80,
+    "diagnostic.maxWindowWidth": 80,
+    
+    "coc.preferences.hoverTarget": "float",
+	"coc.preferences.enableFloatHighlight": true,
+	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.previewAutoClose": false,
+	"coc.preferences.bracketEnterImprove": true,
+
+    "signature.target": "float",
+	"signature.maxWindowHeight": 80,
+}
