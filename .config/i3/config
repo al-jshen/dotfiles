@@ -152,6 +152,10 @@ bindsym Mod1+Shift+8 move container to workspace number $ws8
 bindsym Mod1+Shift+9 move container to workspace number $ws9
 bindsym Mod1+Shift+0 move container to workspace number $ws10
 
+# assign program to workspace 
+assign [class="Spotify"] 1 # apparently doesnt work (-arch wiki)
+for_window [class="Spotify"] move --no-auto-back-and-forth to workspace $ws9
+
 # reload the configuration file
 bindsym Mod1+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -216,8 +220,8 @@ bindsym Mod1+r mode "resize"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-gaps inner 25
-gaps horizontal 30
+gaps inner 15
+gaps horizontal 10
 gaps bottom 10
 gaps top 45
 
@@ -247,10 +251,11 @@ client.focused_inactive $bg    $bg        $inactive
 client.unfocused        $bg    $bg        $inactive
 
 # startup programs
-#exec_always feh --bg-scale /home/js/.config/wallpapers/wp1.jpg
+exec_always feh --bg-scale /home/js/.config/wallpapers/hubble30.tif
+#exec_always pacwall -c glibc -r 2.0 -b \#111215
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
-exec_always pacwall -r 1.5 -b \#111215
 exec xrdb .Xresources
 exec xmodmap ~/.Xmodmap
 exec picom --config /home/js/.config/picom/config -b
+exec Spotify
 exec restart 
