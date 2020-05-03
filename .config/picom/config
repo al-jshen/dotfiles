@@ -233,3 +233,8 @@ wintypes:
         focus = true;
     };
 };
+
+# dont blur screenshots 
+blur-background-exclude = [
+	"class_g = 'slop'"
+]

@@ -58,7 +58,7 @@ PROMPT=" $PROMPT"
 
 
 # | exports | #
-export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin
+export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin
 export EDITOR='nvim'
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -83,13 +83,13 @@ alias vim='nvim'
 alias v='nvim'
 alias wific='sudo wpa_supplicant -B -i wlo1 -c /etc/wpa_supplicant/home.conf'
 alias rmorphans='sudo pacman -Rns $(pacman -Qtdq)'
-alias sss='scrot -s'
 alias suspend='systemctl suspend'
 alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
-alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 15 - | sudo tee /etc/pacman.d/mirrorlist'
+alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
 alias texwatch='latexmk -pdf -pvc'
 alias carta='/home/js/builds/CARTA-v1.3-remote/carta'
+alias clss='rm -f /home/js/screenshots/*'
 
 
 # | custom functions | #
