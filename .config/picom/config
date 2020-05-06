@@ -128,7 +128,8 @@ alpha-step = 0.06;
 #blur-background-fixed = false;
 blur-background-exclude = [
     "window_type = 'dock'",
-    "window_type = 'desktop'"
+    "window_type = 'desktop'",
+	"class_g = 'slop'"
 ];
 
 #################################
@@ -233,8 +234,3 @@ wintypes:
         focus = true;
     };
 };
-
-# dont blur screenshots 
-blur-background-exclude = [
-	"class_g = 'slop'"
-]
