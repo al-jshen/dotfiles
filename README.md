@@ -1,2 +1,2 @@
-# dots2
+# dotfiles
 dotfiles for new arch setup
