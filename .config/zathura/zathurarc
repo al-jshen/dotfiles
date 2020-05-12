@@ -1,3 +1,6 @@
+set sandbox none
+set selection-clipboard clipboard
+
 set recolor true
 set default-bg "#23272e"
 set default-fg "#d8dee9"
