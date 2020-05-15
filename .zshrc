@@ -90,7 +90,8 @@ alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bac
 alias texwatch='latexmk -pdf -pvc'
 alias carta='/home/js/builds/CARTA-v1.3-remote/carta'
 alias clss='rm -f /home/js/screenshots/*'
-
+alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
+alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 
 # | custom functions | #
 

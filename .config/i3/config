@@ -254,11 +254,13 @@ client.focused_inactive $bg    $bg        $inactive
 client.unfocused        $bg    $bg        $inactive
 
 # startup programs
-exec_always feh --bg-scale /home/js/.config/wallpapers/hubble30.tif
-#exec_always pacwall -c glibc -r 2.0 -b \#111215
+#exec_always feh --bg-scale /home/js/.config/wallpapers/hubble30.tif
+exec_always pacwall -c glibc -r 2.0 -b \#111215
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
 exec xmodmap ~/.Xmodmap
 exec picom --config /home/js/.config/picom/config -b
+exec udiskie -a -n -t &
 exec Spotify
+exec xrandr --output DP-0 --gamma 0.875 --brightness 0.9
 exec restart 
