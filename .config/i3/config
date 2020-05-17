@@ -235,9 +235,10 @@ bindsym Mod1+Shift+s exec maim -s ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png
 bindsym Mod1+d exec rofi -show run -lines 10 -eh 2  -width 100 -fullscreen -padding 485 -font "Noto Sans 14"
 bindsym Mod1+q exec google-chrome-stable
 
-# spotify playback
+# keyboard shortcuts
 bindcode 49 exec playerctl play-pause
 bindcode 112 exec notion-app
+bindcode 117 exec maim ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # colour presets
 set $bg #263238
