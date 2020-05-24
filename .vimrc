@@ -1,22 +1,19 @@
 call plug#begin('~/.vim/plugged/')
-    " General
-	"Plug 'vim-syntastic/syntastic'
-    Plug 'scrooloose/nerdtree'
-    Plug 'vim-airline/vim-airline'
+  " General
+  Plug 'scrooloose/nerdtree'
+  Plug 'vim-airline/vim-airline'
 
-    " Syntax/Highlighting
-    Plug 'sheerun/vim-polyglot'
-	Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+  " Languages
+  Plug 'sheerun/vim-polyglot'
 
-    " Completion 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Syntax/Highlighting
+  Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+
+  " Completion 
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'SirVer/ultisnips'
+  Plug 'epilande/vim-react-snippets'
     
-    " Snippets, mostly for React 
-    "Plug 'SirVer/ultisnips'
-    " Plug 'mlaursen/vim-react-snippets'
-    " Plug 'epilande/vim-es2015-snippets'
-
-
 call plug#end()
 
 set mouse=a
@@ -37,7 +34,7 @@ set nospell
 
 " Terminal true colors
 if (has("termguicolors"))
-    set termguicolors
+  set termguicolors
 endif
 
 " Python Provider
@@ -59,6 +56,8 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeMouseMode=3 
 
+set completeopt=longest,menuone
+set completeopt-=preview
 filetype plugin on
 "set omnifunc=syntaxcomplete#Complete
 
@@ -73,16 +72,17 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+let g:UltiSnipsExpandTrigger="<tab>"                                            
+let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"   
+
 " Line Numbers
 set nu
 
-set tabstop=4       " The width of a TAB is set to 4.
-                    " Still it is a \t. It is just that
-                    " Vim will interpret it to be having
-                    " a width of 4.
-
-set shiftwidth=4    " Indents will have a width of 4
-set softtabstop=4   " Sets the number of columns for a TAB
+set expandtab       " Convert \t into spaces
+set tabstop=2       " The width of a TAB
+set shiftwidth=2    " Indent width (when you use >)
+set softtabstop=2   " Sets the number of columns for a TAB
 set autoindent
 set smartindent
 
@@ -106,5 +106,5 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 
 " Theming
 set background=dark
-colorscheme nord-modified
+colorscheme one
 hi Normal guibg=NONE ctermbg=NONE
