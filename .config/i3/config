@@ -233,7 +233,7 @@ bindsym Mod1+Shift+s exec maim -s ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png
 
 # programs
 bindsym Mod1+d exec rofi -show run -lines 10 -eh 2  -width 100 -fullscreen -padding 485 -font "Noto Sans 14"
-bindsym Mod1+q exec google-chrome-stable
+bindsym Mod1+q exec firefox
 
 # keyboard shortcuts
 bindcode 49 exec playerctl play-pause
