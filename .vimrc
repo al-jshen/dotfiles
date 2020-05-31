@@ -2,6 +2,7 @@ call plug#begin('~/.vim/plugged/')
   " General
   Plug 'scrooloose/nerdtree'
   Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
@@ -22,6 +23,9 @@ set statusline^=%{coc#status()}
 " Buffer configurations
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" Airline theme 
+let g:airline_theme='wombat'
 
 " Window splitting 
 set splitbelow
@@ -61,6 +65,7 @@ set completeopt-=preview
 filetype plugin on
 "set omnifunc=syntaxcomplete#Complete
 
+
 " Navigating completion list
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -72,9 +77,6 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:UltiSnipsExpandTrigger="<tab>"                                            
-let g:UltiSnipsJumpForwardTrigger="<tab>"                                       
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"   
 
 " Line Numbers
 set nu
