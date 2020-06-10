@@ -1,0 +1,13 @@
+[?1000h[?1049h[>4;2m[?1h=[?2004h[1;85r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[38;2;171;178;191m[H[2J[85;1H[?1000l[?2004l[>4;m[23;2t[23;1t[?2004l[?1l>[>4;m[?1049lRunning vim to generate startup logs... done.
+Loading and processing logs... done.
+Plugin directory: /home/js/.vim/plugged
+====================================
+Top 10 plugins slowing vim's startup
+====================================
+1	  9.861   nerdtree
+2	  6.560   coc.nvim
+3	  6.225   vim-airline
+4	  2.810   vim-polyglot
+5	  1.040   vim-airline-themes
+6	  0.316   semshi
+====================================

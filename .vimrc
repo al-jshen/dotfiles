@@ -12,8 +12,8 @@ call plug#begin('~/.vim/plugged/')
 
   " Completion 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'SirVer/ultisnips'
-  Plug 'epilande/vim-react-snippets'
+  " Plug 'SirVer/ultisnips'
+  " Plug 'epilande/vim-react-snippets'
     
 call plug#end()
 
@@ -36,6 +36,9 @@ let python_highlight_all=1
 syntax on
 set nospell
 
+" Semshi Configurations
+let g:semshi#always_update_all_highlights = 1
+
 " Terminal true colors
 if (has("termguicolors"))
   set termguicolors
@@ -50,9 +53,6 @@ set encoding=utf-8
 " Fix weird backspace behaviour
 set bs=2
 
-" Semshi Configurations
-let g:semshi#always_update_all_highlights = 1
-
 " Nerdtree Configurations
 map <silent> <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -65,29 +65,30 @@ set completeopt-=preview
 filetype plugin on
 "set omnifunc=syntaxcomplete#Complete
 
-
-" Navigating completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Navigating completion list
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Line Numbers
 set nu
 
-set expandtab       " Convert \t into spaces
-set tabstop=2       " The width of a TAB
-set shiftwidth=2    " Indent width (when you use >)
-set softtabstop=2   " Sets the number of columns for a TAB
+set noexpandtab       " Convert \t into spaces
+"set tabstop=4       " The width of a TAB
+set shiftwidth=4    " Indent width (when you use >)
+set softtabstop=4   " Sets the number of columns for a TAB
 set autoindent
 set smartindent
-
 
 " Don't wrap lines
 set formatoptions-=t
@@ -110,3 +111,6 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 set background=dark
 colorscheme one
 hi Normal guibg=NONE ctermbg=NONE
+ 
+
+
