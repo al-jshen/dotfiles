@@ -1,3 +1,6 @@
+# Load speed profiling. Uncomment this line and the last line in the file.
+# zmodload zsh/zprof
+
 # .zshrc
 setopt autocd # cd without typing cd
 setopt rm_star_silent # dont ask to confirm rm
@@ -25,6 +28,23 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+
+# Lazy-loading nvm to speed up shell start time
+#
+NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+NODE_GLOBALS+=("nvm")
+load_nvm() {
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+    if [ -f "$NVM_DIR/bash_completion" ]; then
+	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+    fi
+}
+
+# Making global keywords trigger the lazy loading
+for cmd in "${NODE_GLOBALS[@]}"; do
+  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
+done
 
 
 # | completions | #
@@ -58,10 +78,8 @@ PROMPT=" $PROMPT"
 
 
 # | exports | #
-export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin
+export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin:~/builds/firefox
 export EDITOR='nvim'
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # | aliases | #
 alias gp='git push -u origin master'
@@ -88,10 +106,11 @@ alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { print
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
 alias texwatch='latexmk -pdf -pvc'
-alias carta='/home/js/builds/CARTA-v1.3-remote/carta'
+alias carta='/home/js/builds/CARTA.AppImage'
 alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
+alias rsnative='RUSTFLAGS="-C target-cpu=native"'
 
 # | custom functions | #
 
@@ -137,5 +156,10 @@ vpn() {
     sudo openvpn /etc/openvpn/$1.ovpn
 }
 
+vcreate() {
+  ffmpeg -y -framerate $3 -i $1 -c:v libx264 $2
+}
+
 stty -ixon
 cd ~
+# zprof
