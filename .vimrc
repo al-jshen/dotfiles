@@ -20,6 +20,9 @@ call plug#end()
 set mouse=a
 set statusline^=%{coc#status()}
 
+" coc.nvim node path
+let g:coc_node_path = '/home/js/.nvm/versions/node/v14.0.0/bin/node'
+
 " Buffer configurations
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1

@@ -32,6 +32,7 @@ zinit light-mode for \
 # Lazy-loading nvm to speed up shell start time
 #
 NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+NODE_GLOBALS+=("node")
 NODE_GLOBALS+=("nvm")
 load_nvm() {
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -111,6 +112,7 @@ alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 alias rsnative='RUSTFLAGS="-C target-cpu=native"'
+alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
 
 # | custom functions | #
 
