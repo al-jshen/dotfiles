@@ -4,6 +4,9 @@
   "python.linting.mypyEnabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "/home/js/.local/bin/flake8",
+  "python.linting.flake8Args": [
+      "--max-line-length=83"
+  ],
   "python.linting.pylintEnabled": false,
   "python.linting.pylintPath": "/home/js/.local/bin/pylint",
   "python.linting.pylintArgs": [
@@ -49,5 +52,7 @@
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
-  "snippets.ultisnips.enable": true
+  "snippets.ultisnips.enable": true,
+
+  "npm.binPath": "/home/js/.nvm/versions/node/v14.0.0/bin/npm"
 }
