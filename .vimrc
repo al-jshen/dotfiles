@@ -97,12 +97,10 @@ set smartindent
 set formatoptions-=t
 set nowrap
 
-" wrap .tex files
-augroup WrapLineInTeXFile
-    autocmd!
-    autocmd FileType tex setlocal wrap linebreak nolist
-    autocmd FileType txt setlocal wrap linebreak nolist
-augroup END
+" wrap certain filetypes
+au BufNewFile,BufRead *.txt setlocal wrap linebreak nolist
+au BufNewFile,BufRead *.tex setlocal wrap linebreak nolist
+au BufNewFile,BufRead *.md setlocal wrap linebreak nolist
 
 " Enable incrementing letters
 set nrformats+=alpha
