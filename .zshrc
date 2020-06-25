@@ -34,6 +34,7 @@ zinit light-mode for \
 NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
 NODE_GLOBALS+=("node")
 NODE_GLOBALS+=("nvm")
+NODE_GLOBALS+=("jupyter")
 load_nvm() {
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
