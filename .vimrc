@@ -3,9 +3,12 @@ call plug#begin('~/.vim/plugged/')
   Plug 'scrooloose/nerdtree'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'godlygeek/tabular'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
+  Plug 'lervag/vimtex'
+
 
 " Syntax/Highlighting
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -55,6 +58,9 @@ set encoding=utf-8
 
 " Fix weird backspace behaviour
 set bs=2
+
+" Faster update time
+set updatetime=100
 
 " Nerdtree Configurations
 map <silent> <C-n> :NERDTreeToggle<CR>
@@ -109,9 +115,6 @@ set nrformats+=alpha
 autocmd FileType crontab setlocal nobackup nowritebackup
 
 " Theming
-set background=dark
 colorscheme one
+set background=dark
 hi Normal guibg=NONE ctermbg=NONE
- 
-
-
