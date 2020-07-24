@@ -5,6 +5,11 @@
 setopt autocd # cd without typing cd
 setopt rm_star_silent # dont ask to confirm rm
 
+# autojump 
+source /etc/profile.d/autojump.sh
+
+# fasd
+eval "$(fasd --init auto)"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -103,7 +108,8 @@ alias vim='nvim'
 alias v='nvim'
 alias wific='sudo wpa_supplicant -B -i wlo1 -c /etc/wpa_supplicant/home.conf'
 alias rmorphans='sudo pacman -Rns $(pacman -Qtdq)'
-alias suspend='systemctl suspend'
+alias cleanpkgs="sudo paccache -r -k 1 --min-mtime '30 days ago'"
+alias suspend="systemctl suspend"
 alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
@@ -161,6 +167,13 @@ vpn() {
 
 vcreate() {
   ffmpeg -y -framerate $3 -i $1 -c:v libx264 $2
+}
+
+preexec() {
+    /home/js/programs/termwrap/target/debug/termwrap $1
+}
+
+precmd() {
 }
 
 stty -ixon
