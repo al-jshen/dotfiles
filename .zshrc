@@ -11,6 +11,15 @@ source /etc/profile.d/autojump.sh
 # fasd
 eval "$(fasd --init auto)"
 
+#source /home/js/programs/termwrap/termwrap.plugin.zsh
+
+#source /home/js/test.zsh
+
+# save zsh history
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
@@ -90,7 +99,7 @@ export EDITOR='nvim'
 
 # | aliases | #
 alias gp='git push -u origin master'
-alias gs='git status'
+alias gst='git status'
 alias ga='git add --all'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
@@ -120,6 +129,7 @@ alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 alias rsnative='RUSTFLAGS="-C target-cpu=native"'
 alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
+alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 
 # | custom functions | #
 
@@ -170,7 +180,7 @@ vcreate() {
 }
 
 preexec() {
-    /home/js/programs/termwrap/target/debug/termwrap $1
+ #   /home/js/programs/termwrap/target/debug/termwrap $1
 }
 
 precmd() {
