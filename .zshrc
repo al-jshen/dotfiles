@@ -6,7 +6,7 @@ setopt autocd # cd without typing cd
 setopt rm_star_silent # dont ask to confirm rm
 
 # autojump 
-source /etc/profile.d/autojump.sh
+# source /etc/profile.d/autojump.sh
 
 # fasd
 eval "$(fasd --init auto)"
@@ -98,8 +98,13 @@ export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin:~/build
 export EDITOR='nvim'
 
 # | aliases | #
+alias v='f -e nvim'
+alias vim='v'
+alias c='f -e cat'
+alias cat='c'
+alias j='fasd_cd -d'
 alias gp='git push -u origin master'
-alias gst='git status'
+alias gs="git status"
 alias ga='git add --all'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
@@ -113,8 +118,6 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias md='mkdir'
 alias rd='rmdir'
-alias vim='nvim'
-alias v='nvim'
 alias wific='sudo wpa_supplicant -B -i wlo1 -c /etc/wpa_supplicant/home.conf'
 alias rmorphans='sudo pacman -Rns $(pacman -Qtdq)'
 alias cleanpkgs="sudo paccache -r -k 1 --min-mtime '30 days ago'"
@@ -134,15 +137,24 @@ alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 # | custom functions | #
 
 gc() {
-    git clone https://github.com/$1.git
+    arg=$1
+    if [ ${arg[1,18]} = "https://github.com" ]; then
+	git clone $arg
+    else
+	git clone https://github.com/$arg.git
+    fi
+}
+
+pdfcomp() {
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output_compressed.pdf $1
 }
 
 kl() {
-	kill $(ps -aux |grep $1 |pid) > /dev/null 2>&1
+    kill $(ps -aux |grep $1 |pid) > /dev/null 2>&1
 }
 
 vcomp() {
-	ffmpeg -i $1 -vcodec libx264 -crf 20 $2
+    ffmpeg -i $1 -vcodec libx264 -crf 20 $2
 }
 
 vconv() {

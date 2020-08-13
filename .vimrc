@@ -4,6 +4,7 @@ call plug#begin('~/.vim/plugged/')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'godlygeek/tabular'
+  Plug 'tpope/vim-commentary'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
@@ -52,6 +53,10 @@ endif
 
 " Python Provider
 let g:python3_host_prog = '/usr/bin/python'
+
+" Latex stuff
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
 
 " UTF-8 Support
 set encoding=utf-8
