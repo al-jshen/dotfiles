@@ -46,7 +46,7 @@ set $right semicolon
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec termite
+bindsym Mod1+Return exec alacritty
 
 # kill focused window
 bindsym Mod1+Shift+q kill
@@ -220,10 +220,10 @@ bindsym Mod1+r mode "resize"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-gaps inner 15
-gaps horizontal 10
-gaps bottom 10
-gaps top 45
+# gaps inner 20
+# gaps horizontal 70
+# gaps bottom 60
+gaps top 36
 
 # no borders
 new_window none
@@ -233,7 +233,7 @@ bindsym Mod1+Shift+s exec maim -s ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png
 
 # programs
 bindsym Mod1+d exec rofi -show run -lines 10 -eh 2  -width 100 -fullscreen -padding 485 -font "Noto Sans 14"
-bindsym Mod1+q exec firefox
+bindsym Mod1+q exec google-chrome-stable
 
 # keyboard shortcuts
 bindcode 49 exec playerctl play-pause
@@ -260,7 +260,7 @@ exec_always pacwall -c glibc -r 2.0 -b \#111215
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
 exec xmodmap ~/.Xmodmap
-exec picom --config /home/js/.config/picom/config -b
+#exec picom --config /home/js/.config/picom/config -b
 exec udiskie -a -n -t &
 exec Spotify
 exec xrandr --output DP-0 --gamma 0.875 --brightness 0.9
