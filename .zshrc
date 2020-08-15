@@ -101,7 +101,6 @@ export EDITOR='nvim'
 alias v='f -e nvim'
 alias vim='v'
 alias c='f -e cat'
-alias cat='c'
 alias j='fasd_cd -d'
 alias gp='git push -u origin master'
 alias gs="git status"
