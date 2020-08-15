@@ -102,13 +102,13 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 
 # | exports | #
+export TERM='xterm-256color'
 export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin:~/builds/firefox
 export EDITOR='nvim'
 
 # | aliases | #
 alias z='f -e zathura'
 alias v='f -e nvim'
-alias vim='v'
 alias c='f -e cat'
 alias j='fasd_cd -d'
 alias gp='git push -u origin master'
