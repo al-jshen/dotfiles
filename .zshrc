@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Load speed profiling. Uncomment this line and the last line in the file.
 # zmodload zsh/zprof
 
@@ -84,13 +91,14 @@ zinit light zdharma/fast-syntax-highlighting
 
 
 # | prompt | #
-fpath+=('/home/js/.nvm/versions/node/v13.12.0/lib/node_modules/pure-prompt/functions')
-zinit ice wait lucid compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-zinit light sindresorhus/pure
-autoload -U promptinit; promptinit
-prompt pure
-prompt_newline='%666v'
-PROMPT=" $PROMPT"
+# fpath+=('/home/js/.nvm/versions/node/v13.12.0/lib/node_modules/pure-prompt/functions')
+# zinit ice wait lucid compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
+# autoload -U promptinit; promptinit
+# prompt pure
+# prompt_newline='%666v'
+# PROMPT=" $PROMPT"
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
 
 # | exports | #
@@ -98,6 +106,7 @@ export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin:~/build
 export EDITOR='nvim'
 
 # | aliases | #
+alias z='f -e zathura'
 alias v='f -e nvim'
 alias vim='v'
 alias c='f -e cat'
@@ -197,6 +206,7 @@ preexec() {
 precmd() {
 }
 
-stty -ixon
-cd ~
 # zprof
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
