@@ -141,6 +141,7 @@ alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 alias rsnative='RUSTFLAGS="-C target-cpu=native"'
 alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
 alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
+alias xc='xclip -se c'
 
 # | custom functions | #
 
@@ -197,13 +198,6 @@ vpn() {
 
 vcreate() {
   ffmpeg -y -framerate $3 -i $1 -c:v libx264 $2
-}
-
-preexec() {
- #   /home/js/programs/termwrap/target/debug/termwrap $1
-}
-
-precmd() {
 }
 
 # zprof
