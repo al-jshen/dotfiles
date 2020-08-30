@@ -5,11 +5,13 @@ call plug#begin('~/.vim/plugged/')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'godlygeek/tabular'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-surround'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
   Plug 'lervag/vimtex'
-
+  Plug 'rust-lang/rust.vim'
+  Plug 'arzg/vim-rust-syntax-ext'
 
 " Syntax/Highlighting
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -20,6 +22,11 @@ call plug#begin('~/.vim/plugged/')
   " Plug 'epilande/vim-react-snippets'
     
 call plug#end()
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
 set mouse=a
 set statusline^=%{coc#status()}
@@ -39,12 +46,14 @@ set splitbelow
 set splitright
 
 " Syntax Highlighting
-let python_highlight_all=1
 syntax on
 set nospell
 
 " Semshi Configurations
-let g:semshi#always_update_all_highlights = 1
+"let g:semshi#always_update_all_highlights = 1
+
+" Run rustfmt on save
+let g:rustfmt_autosave = 1
 
 " Terminal true colors
 if (has("termguicolors"))
@@ -56,7 +65,7 @@ let g:python3_host_prog = '/usr/bin/python'
 
 " Latex stuff
 let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
+" let g:vimtex_view_method = 'zathura'
 
 " UTF-8 Support
 set encoding=utf-8
@@ -121,5 +130,5 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 
 " Theming
 colorscheme one
-set background=dark
 hi Normal guibg=NONE ctermbg=NONE
+hi Identifier guifg=#a9b0bf
