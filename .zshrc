@@ -1,3 +1,9 @@
+# start tmux on start
+if [ -z $TMUX ]
+then
+    tmux a || tmux
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -83,7 +89,11 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower
 
 # shift tab to go through completion menu backwards
 bindkey '^[[Z' reverse-menu-complete
+# control+backspace to delete a word at a time
+bindkey '^H' backward-kill-word
 
+# no timeout when entering normal mode
+KEYTIMEOUT=0
 
 # | highlighting | #
 zinit ice wait lucid atinit'zpcompinit; zpcdreplay'
@@ -111,6 +121,7 @@ alias z='f -e zathura'
 alias v='f -e nvim'
 alias c='f -e cat'
 alias j='fasd_cd -d'
+alias vim='nvim'
 alias gp='git push -u origin master'
 alias gs="git status"
 alias ga='git add --all'
@@ -142,6 +153,7 @@ alias rsnative='RUSTFLAGS="-C target-cpu=native"'
 alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
 alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 alias xc='xclip -se c'
+alias xrg='xargs -d "\n"'
 
 # | custom functions | #
 
