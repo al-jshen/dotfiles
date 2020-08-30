@@ -104,7 +104,8 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " Line Numbers
-set nu
+set relativenumber
+set number
 
 set noexpandtab       " Convert \t into spaces
 "set tabstop=4       " The width of a TAB
