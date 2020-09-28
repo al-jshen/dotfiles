@@ -1,13 +1,17 @@
-[?1000h[?1049h[>4;2m[?1h=[?2004h[1;85r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[38;2;171;178;191m[H[2J[85;1H[?1000l[?2004l[>4;m[23;2t[23;1t[?2004l[?1l>[>4;m[?1049lRunning vim to generate startup logs... done.
+[?1000h[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;75r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[38;2;73;75;83m[H[2J[75;1H[?1000l[?2004l[>4;m[23;2t[23;1t[?2004l[?1l>[>4;m[?1049l[23;0;0tRunning vim to generate startup logs... done.
 Loading and processing logs... done.
 Plugin directory: /home/js/.vim/plugged
 ====================================
 Top 10 plugins slowing vim's startup
 ====================================
-1	  9.861   nerdtree
-2	  6.560   coc.nvim
-3	  6.225   vim-airline
-4	  2.810   vim-polyglot
-5	  1.040   vim-airline-themes
-6	  0.316   semshi
+1	 12.352   vim-polyglot
+2	  5.645   nerdtree
+3	  4.068   coc.nvim
+4	  3.429   vim-airline
+5	  1.885   tabular
+6	  0.843   vim-airline-themes
+7	  0.438   fzf
+8	  0.363   vimtex
+9	  0.325   vim-surround
+10	  0.212   semshi
 ====================================
