@@ -5,13 +5,16 @@ call plug#begin('~/.vim/plugged/')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'godlygeek/tabular'
   Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-surround'
+  " Plug 'tpope/vim-surround'
+  Plug 'machakann/vim-highlightedyank'
+  Plug 'junegunn/fzf'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
   Plug 'lervag/vimtex'
   Plug 'rust-lang/rust.vim'
   Plug 'arzg/vim-rust-syntax-ext'
+  Plug 'eigenfoo/stan-vim'
 
 " Syntax/Highlighting
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -39,7 +42,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " Airline theme 
-let g:airline_theme='wombat'
+let g:airline_theme='deus'
 
 " Window splitting 
 set splitbelow
@@ -54,6 +57,9 @@ set nospell
 
 " Run rustfmt on save
 let g:rustfmt_autosave = 1
+
+" alias :Prettier for :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " Terminal true colors
 if (has("termguicolors"))
@@ -77,10 +83,11 @@ set bs=2
 set updatetime=100
 
 " Nerdtree Configurations
+" let g:NERDTreeHijackNetrw=0
 map <silent> <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeMouseMode=3 
 
 set completeopt=longest,menuone
@@ -107,8 +114,8 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 set relativenumber
 set number
 
-set noexpandtab       " Convert \t into spaces
-"set tabstop=4       " The width of a TAB
+set expandtab       " Convert \t into spaces
+set tabstop=4       " The width of a TAB
 set shiftwidth=4    " Indent width (when you use >)
 set softtabstop=4   " Sets the number of columns for a TAB
 set autoindent
