@@ -80,7 +80,7 @@ okular
 openblas
 openvpn
 optix
-os-prober
+p7zip
 pacwall-git
 pamixer
 pandoc
@@ -141,6 +141,7 @@ ttf-meslo
 ttf-ms-fonts
 ttf-roboto
 tumbler
+tuxboot
 udiskie
 udisks2
 unzip
