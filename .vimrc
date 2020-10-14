@@ -26,10 +26,14 @@ call plug#begin('~/.vim/plugged/')
     
 call plug#end()
 
+" disable arrow keys in normal mode
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
+
+" use <esc> to clear highlighting after a search
+nnoremap <silent> <esc> :noh<cr><esc>
 
 set mouse=a
 set statusline^=%{coc#status()}
