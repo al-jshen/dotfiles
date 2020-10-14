@@ -21,6 +21,7 @@ cuda
 cudnn
 dhcpcd
 dialog
+diffpdf
 discord
 docker
 docker-compose-bin
@@ -32,6 +33,7 @@ exfat-utils
 fakeroot
 fasd-git
 feh
+firefox
 flex
 fzf
 gcc
@@ -49,7 +51,6 @@ hashcat
 hashcat-utils
 hcxdumptool
 hcxtools
-heroku-cli
 hsetroot
 i3-gaps
 i3status
@@ -58,6 +59,7 @@ inotify-tools
 iw
 linux
 linux-firmware
+luit
 lxappearance
 m4
 maim
@@ -88,7 +90,6 @@ parallel
 patch
 perf
 perl-rename
-picom
 pkgconf
 playerctl
 polybar-git
@@ -111,6 +112,7 @@ rofi
 rstudio-desktop
 rsync
 rustup
+seahorse
 slack-desktop
 slop
 spotify
@@ -163,7 +165,6 @@ xorg-fonts-100dpi
 xorg-fonts-75dpi
 xorg-fonts-encodings
 xorg-iceauth
-xorg-luit
 xorg-mkfontscale
 xorg-server
 xorg-server-common
