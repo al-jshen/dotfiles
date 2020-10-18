@@ -1,8 +1,8 @@
 # start tmux on start
-if [ -z $TMUX ]
-then
-    tmux a || tmux
-fi
+# if [ -z $TMUX ]
+# then
+#     tmux a || tmux
+# fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -29,8 +29,8 @@ eval "$(fasd --init auto)"
 #source /home/js/test.zsh
 
 # save zsh history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 ### Added by Zinit's installer
@@ -122,8 +122,8 @@ alias v='f -e nvim'
 alias c='f -e cat'
 alias j='fasd_cd -d'
 alias vim='nvim'
-alias gp='git push -u origin master'
-alias gs="git status"
+alias gp='git push'
+alias gst="git status"
 alias ga='git add --all'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
@@ -154,8 +154,12 @@ alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
 alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 alias xc='xclip -se c'
 alias xrg='xargs -d "\n"'
+alias ds='& disown'
 
 # | custom functions | #
+
+source "/usr/share/fzf/key-bindings.zsh"
+source "/usr/share/fzf/completion.zsh"
 
 gc() {
     arg=$1
