@@ -313,11 +313,16 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
     let s:syntax_cursor = ['#2c323c', '16']
 
     let s:syntax_accent = ['#528bff', '69']
+    let s:syntax_accent_2 = ['#0083be', '31']
 
     let s:vertsplit    = ['#181a1f', '233']
     let s:special_grey = ['#3b4048', '16']
     let s:visual_grey  = ['#3e4452', '17']
     let s:pmenu        = ['#333841', '16']
+
+    let s:frost_1 = ['#8FBCBB', '116']
+    let s:frost_2 = ['#88C0D0', '122']
+    let s:frost_3 = ['#81A1C1', '111']
   else
     let s:mono_1 = ['#494b53', '23']
     let s:mono_2 = ['#696c77', '60']
@@ -406,41 +411,44 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " }}}
 
   " Standard syntax highlighting --------------------------------------------{{{
-  call <sid>X('Comment',        s:mono_3,        '',          s:italic)
-  call <sid>X('Constant',       s:hue_4,         '',          '')
-  call <sid>X('String',         s:hue_4,         '',          '')
-  call <sid>X('Character',      s:hue_4,         '',          '')
-  call <sid>X('Number',         s:hue_6,         '',          '')
-  call <sid>X('Boolean',        s:hue_6,         '',          '')
-  call <sid>X('Float',          s:hue_6,         '',          '')
-  call <sid>X('Identifier',     s:hue_5,         '',          'none')
-  call <sid>X('Function',       s:hue_2,         '',          '')
-  call <sid>X('Statement',      s:hue_3,         '',          'none')
-  call <sid>X('Conditional',    s:hue_3,         '',          '')
-  call <sid>X('Repeat',         s:hue_3,         '',          '')
-  call <sid>X('Label',          s:hue_3,         '',          '')
-  call <sid>X('Operator',       s:syntax_accent, '',          'none')
-  call <sid>X('Keyword',        s:hue_5,         '',          '')
-  call <sid>X('Exception',      s:hue_3,         '',          '')
-  call <sid>X('PreProc',        s:hue_6_2,       '',          '')
-  call <sid>X('Include',        s:hue_2,         '',          '')
-  call <sid>X('Define',         s:hue_3,         '',          'none')
-  call <sid>X('Macro',          s:hue_3,         '',          '')
-  call <sid>X('PreCondit',      s:hue_6_2,       '',          '')
-  call <sid>X('Type',           s:hue_6_2,       '',          'none')
-  call <sid>X('StorageClass',   s:hue_6_2,       '',          '')
-  call <sid>X('Structure',      s:hue_6_2,       '',          '')
-  call <sid>X('Typedef',        s:hue_6_2,       '',          '')
-  call <sid>X('Special',        s:hue_2,         '',          '')
-  call <sid>X('SpecialChar',    '',              '',          '')
-  call <sid>X('Tag',            '',              '',          '')
-  call <sid>X('Delimiter',      '',              '',          '')
-  call <sid>X('SpecialComment', '',              '',          '')
-  call <sid>X('Debug',          '',              '',          '')
-  call <sid>X('Underlined',     '',              '',          'underline')
-  call <sid>X('Ignore',         '',              '',          '')
-  call <sid>X('Error',          s:hue_5,         s:syntax_bg, 'bold')
-  call <sid>X('Todo',           s:hue_3,         s:syntax_bg, '')
+  call <sid>X('Comment',        s:mono_3,         '',          s:italic)
+  call <sid>X('Constant',       s:hue_4,          '',          '')
+  call <sid>X('String',         s:hue_4,          '',          '')
+  call <sid>X('Character',      s:hue_4,          '',          '')
+  call <sid>X('Number',         s:hue_6,          '',          '')
+  call <sid>X('Boolean',        s:hue_6,          '',          '')
+  call <sid>X('Float',          s:hue_6,          '',          '')
+  call <sid>X('Identifier',     s:hue_5,          '',          'none')
+  call <sid>X('Function',       s:hue_2,          '',          '')
+  call <sid>X('Statement',      s:hue_3,          '',          'none')
+  call <sid>X('Conditional',    s:hue_3,          '',          '')
+  call <sid>X('Repeat',         s:hue_3,          '',          '')
+  call <sid>X('Label',          s:hue_3,          '',          '')
+  call <sid>X('Operator',       s:syntax_accent,  '',          'none')
+  call <sid>X('Keyword',        s:hue_5,          '',          '')
+  call <sid>X('Exception',      s:hue_3,          '',          '')
+  call <sid>X('PreProc',        s:hue_6_2,        '',          '')
+  call <sid>X('Include',        s:hue_2,          '',          '')
+  call <sid>X('Define',         s:hue_3,          '',          'none')
+  call <sid>X('Macro',          s:hue_3,          '',          '')
+  call <sid>X('PreCondit',      s:hue_6_2,        '',          '')
+  call <sid>X('Type',           s:hue_6_2,        '',          'none')
+  call <sid>X('StorageClass',   s:hue_6_2,        '',          '')
+  call <sid>X('Structure',      s:hue_6_2,        '',          '')
+  call <sid>X('Typedef',        s:hue_6_2,        '',          '')
+  call <sid>X('Special',        s:hue_2,          '',          '')
+  call <sid>X('SpecialChar',    s:hue_1,          '',          '')
+  call <sid>X('Tag',            '',               '',          '')
+  call <sid>X('Delimiter',      '',               '',          '')
+  call <sid>X('SpecialComment', s:syntax_accent_2,'',          '')
+  call <sid>X('Debug',          '',               '',          '')
+  call <sid>X('Underlined',     '',               '',          'underline')
+  call <sid>X('Ignore',         '',               '',          '')
+  call <sid>X('Error',          s:hue_5,          s:syntax_bg, 'bold')
+  call <sid>X('Todo',           s:hue_3,          s:syntax_bg, '')
+  call <sid>X('Frost1',         s:frost_1,        '',          '')
+  call <sid>X('Frost2',         s:frost_2,        '',          '')
+  call <sid>X('Frost3',         s:frost_3,        '',          '')
   " }}}
 
   " Diff highlighting -------------------------------------------------------{{{
@@ -890,3 +898,8 @@ if exists('s:dark') && s:dark
 endif
 
 " vim: set fdl=0 fdm=marker:
+
+
+  " LSP highlighting ------------------------------ {{{
+  call <sid>X('LspDiagnosticsError', s:hue_5, '', '')
+  call <sid>X('LspDiagnosticsWarning', s:hue_6, '', '')

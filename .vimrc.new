@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged/')
   " Plug 'tpope/vim-surround'
   Plug 'machakann/vim-highlightedyank'
   Plug 'junegunn/fzf'
+  Plug 'jiangmiao/auto-pairs'
 
   " Languages
   Plug 'sheerun/vim-polyglot'
@@ -109,13 +110,16 @@ let g:completion_matching_ignore_case = 1
 let g:completion_trigger_on_delete = 0
 
 lua << EOF
+
 local on_attach_vim = function(client)
   require'completion'.on_attach(client)
   require'diagnostic'.on_attach(client)
 end
+
 require'nvim_lsp'.pyls.setup{on_attach=on_attach_vim}
 require'nvim_lsp'.jsonls.setup{on_attach=on_attach_vim}
 require'nvim_lsp'.rust_analyzer.setup{on_attach=on_attach_vim}
+
 EOF
 
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -136,7 +140,11 @@ set signcolumn=yes
 
 " Inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = ' » ', highlight = "SpecialChar"}
+\ lua require'lsp_extensions'.inlay_hints{ 
+  \ prefix = ' » ', 
+  \ highlight = "Frost1", 
+  \ aligned = false,
+  \ only_current_line = false}
 
 " use tabnine
 let g:completion_chain_complete_list = {
