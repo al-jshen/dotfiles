@@ -123,7 +123,7 @@ alias c='f -e cat'
 alias j='fasd_cd -d'
 alias vim='nvim'
 alias gp='git push'
-alias gst="git status"
+alias gs="git status"
 alias ga='git add --all'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
@@ -132,7 +132,8 @@ alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias mpv='mpv --sub-scale=0.4'
-alias l='ls -al --color=always'
+# alias l='ls -al --color=always'
+alias l='exa -al --git'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias md='mkdir'
@@ -171,7 +172,7 @@ gc() {
 }
 
 pdfcomp() {
-    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output_compressed.pdf $1
+    /usr/bin/gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output_compressed.pdf $1
 }
 
 kl() {
