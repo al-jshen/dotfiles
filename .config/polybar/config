@@ -17,15 +17,30 @@
 ;==========================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
-background = #222
+background = #1f2329
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
 foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
+
+night1 = #2e3440
+night2 = #3b4252
+night3 = #434c5e    
+night4 = #4c566a
+snow1 = #d8dee9
+snow2 = #e5e9f0
+snow3 = #eceff4
+frost1 = #8fbcbb
+frost2 = #88c0d0
+frost3 = #71a1c1
+frost4 = #5e81ac
+aurora1 = #bf616a
+aurora2 = #d08770
+aurora3 = #ebcb8b
+aurora4 = #a3be8c
+aurora5 = #b48ead
 
 [bar/all]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -37,37 +52,41 @@ offset-x = 0%
 ;offset-x = 9%
 offset-y = 0%
 ;offset-y = 1%
-;radius = 10
+; radius = 15
 fixed-center = true
 
 background = ${colors.background}
-foreground = ${colors.foreground}
+foreground = ${colors.snow2}
 
 line-size = 3
 line-color = #f00
 
 ;border-size = 4
 ;border-color = #00000000
+; border-bottom-size = 2
+; border-bottom-color = ${colors.frost1}
 
-padding-left = 0
+padding-left = 45
 padding-right = 2
 
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = Noto Sans:style=Regular:size=13;4
+font-0 = Noto Sans:style=Regular:size=14;4
 font-1 = FontAwesome5Free:style=Regular:size=15;4
 font-2 = FontAwesome5Free:style=Solid:size=15;4
 font-3 = FontAwesome5Brands:style=Regular:size=15;4
 font-4 = FontAwesome:style=Regular:size=15;4
 
-modules-left = i3
-;modules-center = spotify
-modules-right = filesystem pulseaudio usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan date powermenu
+modules-left = date i3 xwindow 
+modules-center = spotify
+modules-right = filesystem pulseaudio mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan powermenu
 
-tray-position = right
+tray-position = left
+tray-detached = true
 tray-padding = 2
-;tray-background = #0063ff
+tray-offset-x = 20
+; tray-background = ${colors.night1}
 
 ;wm-restack = bspwm
 wm-restack = i3
@@ -92,9 +111,8 @@ mount-0 = /
 mount-1 = /data
 mount-2 = /mnt/t5
 
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %used% / %total%  |
-; label-unmounted = %mountpoint% not mounted
-; label-unmounted-foreground = ${colors.foreground-alt}
+label-mounted = %{F#aae}%mountpoint%%{F-}: %percentage_used%% 
+; label-mounted-underline = ${colors.frost1}
 label-unmounted = 
 
 [module/i3]
@@ -104,7 +122,7 @@ index-sort = true
 wrapping-scroll = false
 
 ; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+; pin-workspaces = true
 
 label-mode-padding = 2
 label-mode-foreground = #000
@@ -112,8 +130,8 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.primary}
+label-focused-background = ${colors.night1}
+label-focused-underline= ${colors.frost4}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
@@ -122,19 +140,23 @@ label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %  dex%
-efont-0 = fixed:pixelsize=10;1
+efont-0 = fixed:pixelsize=15;1
 label-visible-background = ${self.label-focused-background}
 label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
-label-urgent-background = ${colors.alert}
+label-urgent-background = ${colors.aurora1}
 label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
 
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-underline = ${colors.aurora3}
 
 [module/spotify]
 type = custom/script
@@ -142,6 +164,7 @@ interval = 3
 exec = playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}"
 format-prefix = "  "
 format-prefix-foreground = #1DB954
+format-underline = #1db954
 label = %output%
 click-left = playerctl previous
 click-right = playerctl next
@@ -151,22 +174,22 @@ type = internal/cpu
 interval = 2
 ;format-prefix = "  "
 ;format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #F0020E
+format-underline = ${colors.aurora1}
 label = %percentage:2%%
 
 [module/usage_memory]
 type = internal/memory
 interval = 2
-format-prefix = "  "
+; format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-underline = ${colors.aurora3}
 label = %percentage_used%%
 
 [module/usage_gpu]
 type = custom/script
 interval = 2
 exec = nvidia-smi --format=csv,noheader,nounits --query-gpu="utilization.gpu"
-format-underline = #76b900
+format-underline = ${colors.aurora4}
 label = %output%%
 
 [module/wlan]
@@ -176,7 +199,7 @@ interval = 10
 
 format-connected-prefix = "  "
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+format-connected-underline = ${colors.aurora5}
 label-connected = %local_ip%
 
 format-disconnected =
@@ -200,19 +223,17 @@ date = "%A %b %d %Y"
 
 time = "%l:%M %p"
 
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
-
+; format-prefix = "   "
+format-suffix = "   "
+  
 label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-prefix = "  "
+; format-prefix = "  "
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
-label-volume-foreground = ${root.foreground}
+label-volume = vol %percentage%%
 
 label-muted = 🔇 muted
 label-muted-foreground = #666
@@ -225,8 +246,8 @@ bar-volume-foreground-3 = #55aa55
 bar-volume-foreground-4 = #55aa55
 bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
+bar-volume-gradient = true
+bar-volume-indicator = 
 bar-volume-indicator-font = 2
 bar-volume-fill = ─
 bar-volume-fill-font = 2
@@ -241,7 +262,7 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <ramp> <label>
-format-underline = #F0020E
+format-underline = ${colors.aurora1}
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
@@ -254,6 +275,15 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
+[module/mic_toggle]
+type = custom/script
+
+exec = if amixer get Capture |tail -n1 |awk '{print $6}' |cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi
+interval = 1
+
+format = <label>
+label = %output%
+
 [module/temperature_gpu]
 type = custom/script
 
@@ -263,7 +293,7 @@ tail = false
 interval = 1
 
 format = <label>
-format-underline = #76b900
+format-underline = ${colors.aurora4}
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
