@@ -161,10 +161,7 @@ label-underline = ${colors.aurora3}
 [module/spotify]
 type = custom/script
 interval = 3
-exec = playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}"
-format-prefix = "  "
-format-prefix-foreground = #1DB954
-format-underline = #1db954
+exec = if playerctl metadata 2>&1 | grep -q 'player'; then echo ""; else echo %{u#1db954}%{+u}%{F#1db954}%{F-} " " $(playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}")%{-u};fi
 label = %output%
 click-left = playerctl previous
 click-right = playerctl next
