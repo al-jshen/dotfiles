@@ -277,6 +277,7 @@ type = custom/script
 
 exec = if amixer get Capture |tail -n1 |awk '{print $6}' |cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi
 interval = 1
+click-left = amixer set Capture toggle
 
 format = <label>
 label = %output%
