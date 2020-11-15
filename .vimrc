@@ -186,9 +186,9 @@ set relativenumber
 set number
 
 set expandtab       " Convert \t into spaces
-set tabstop=4       " The width of a TAB
-set shiftwidth=4    " Indent width (when you use >)
-set softtabstop=4   " Sets the number of columns for a TAB
+set tabstop=2       " The width of a TAB
+set shiftwidth=2    " Indent width (when you use >)
+set softtabstop=2   " Sets the number of columns for a TAB
 set autoindent
 set smartindent
 
@@ -208,6 +208,6 @@ set nrformats+=alpha
 autocmd FileType crontab setlocal nobackup nowritebackup
 
 " Theming
-colorscheme one
+colorscheme gruvbox-dark-hard
 hi Normal guibg=NONE ctermbg=NONE
 hi Identifier guifg=#a9b0bf
