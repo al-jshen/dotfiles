@@ -66,11 +66,11 @@ line-color = #f00
 ; border-bottom-size = 2
 ; border-bottom-color = ${colors.frost1}
 
-padding-left = 45
+padding-left = 0
 padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
 font-0 = Noto Sans:style=Regular:size=14;4
 font-1 = FontAwesome5Free:style=Regular:size=15;4
@@ -78,14 +78,14 @@ font-2 = FontAwesome5Free:style=Solid:size=15;4
 font-3 = FontAwesome5Brands:style=Regular:size=15;4
 font-4 = FontAwesome:style=Regular:size=15;4
 
-modules-left = date i3 xwindow 
+modules-left = i3 xwindow 
 modules-center = spotify
-modules-right = filesystem pulseaudio mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan powermenu
+modules-right = filesystem sound mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan date powermenu 
 
-tray-position = left
-tray-detached = true
-tray-padding = 2
-tray-offset-x = 20
+tray-position = right
+tray-detached = false
+tray-padding = 0
+tray-offset-x = 0
 ; tray-background = ${colors.night1}
 
 ;wm-restack = bspwm
@@ -155,7 +155,7 @@ label-urgent-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
-label = %title%
+label = %title:0:100:...%
 label-underline = ${colors.aurora3}
 
 [module/spotify]
@@ -252,7 +252,6 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
-
 [module/temperature_cpu]
 type = internal/temperature
 thermal-zone = 0
@@ -271,6 +270,14 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
+
+[module/sound]
+type = custom/script
+interval = 1
+exec = if amixer get Master | tail -n1 | awk '{print $6}' | cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo vol: $(amixer get Master | tail -n1 | awk '{print $4}' | cut -d '[' -f2 | cut -d ']' -f1); else echo "%{F#666}muted%{F-}"; fi
+; format-underline = ${colors.aurora4}
+format = <label>
+label = %output%
 
 [module/mic_toggle]
 type = custom/script
