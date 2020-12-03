@@ -30,10 +30,10 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 # set $refresh_i3status killall -SIGUSR1 i3status
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-# bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -212,19 +212,19 @@ bindsym Mod1+r mode "resize"
 
 
 # audio controls
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master 3%-"
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master 3%+"
-bindsym XF86AudioMute exec "amixer -q sset Master toggle"
+# bindsym XF86AudioLowerVolume exec "amixer -q sset Master 3%-"
+# bindsym XF86AudioRaiseVolume exec "amixer -q sset Master 3%+"
+# bindsym XF86AudioMute exec "amixer -q sset Master toggle"
 #bindsym XF86AudioPlay exec "playerctl play-pause"
 #bindsym XF86AudioPrev exec "playerctl prev"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-# gaps inner 20
-# gaps horizontal 20
-# gaps bottom 40
-# gaps top 50
-gaps top 35
+gaps inner 40
+gaps horizontal 20
+gaps bottom 40
+gaps top 60
+# gaps top 35
 
 # no borders
 new_window none
@@ -237,9 +237,10 @@ bindsym Mod1+d exec rofi -show run -lines 10 -eh 2  -width 100 -fullscreen -padd
 bindsym Mod1+q exec google-chrome-stable
 
 # keyboard shortcuts
-bindcode 49 exec playerctl play-pause
+bindcode 49 exec playerctl --player=spotify play-pause
 bindcode 112 exec notion-app
-bindcode 119 exec amixer set Capture toggle
+# bindcode 119 exec amixer set Capture toggle
+bindcode 119 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindcode 117 exec maim ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # colour presets
@@ -257,8 +258,8 @@ client.focused_inactive $bg    $bg        $inactive
 client.unfocused        $bg    $bg        $inactive
 
 # startup programs
-#exec_always feh --bg-scale /home/js/.config/wallpapers/lannister.jpg
-exec_always pacwall -ug
+exec_always feh --bg-scale /home/js/.config/wallpapers/mountains.jpg
+# exec_always pacwall -ug
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
 exec xmodmap ~/.Xmodmap
