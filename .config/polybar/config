@@ -27,7 +27,7 @@ alert = #bd2c40
 
 night1 = #2e3440
 night2 = #3b4252
-night3 = #434c5e    
+night3 = #434c5e
 night4 = #4c566a
 snow1 = #d8dee9
 snow2 = #e5e9f0
@@ -78,9 +78,9 @@ font-2 = FontAwesome5Free:style=Solid:size=15;4
 font-3 = FontAwesome5Brands:style=Regular:size=15;4
 font-4 = FontAwesome:style=Regular:size=15;4
 
-modules-left = i3 xwindow 
+modules-left = i3 xwindow
 modules-center = spotify
-modules-right = filesystem pulseaudio mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan date powermenu 
+modules-right = filesystem sound mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan date powermenu
 
 tray-position = right
 tray-detached = false
@@ -111,9 +111,9 @@ mount-0 = /
 mount-1 = /data
 mount-2 = /mnt/t5
 
-label-mounted = %{F#aae}%mountpoint%%{F-}: %percentage_used%% 
+label-mounted = %{F#aae}%mountpoint%%{F-}: %percentage_used%%
 ; label-mounted-underline = ${colors.frost1}
-label-unmounted = 
+label-unmounted =
 
 [module/i3]
 type = internal/i3
@@ -161,7 +161,7 @@ label-underline = ${colors.aurora3}
 [module/spotify]
 type = custom/script
 interval = 3
-exec = if playerctl metadata 2>&1 | grep -q 'player'; then echo ""; else echo %{u#1db954}%{+u}%{F#1db954}%{F-} " " $(playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}")%{-u};fi
+exec = if playerctl metadata 2>&1 | rg -q 'player'; then echo " "; else echo %{u#1db954}%{+u}%{F#1db954}%{F-} " " $(playerctl metadata --player=spotify --format "{{ artist }} - {{ title }}")%{-u};fi
 label = %output%
 click-left = playerctl previous
 click-right = playerctl next
@@ -222,7 +222,7 @@ time = "%l:%M %p"
 
 ; format-prefix = "   "
 format-suffix = "   "
-  
+
 label = %date% %time%
 
 [module/pulseaudio]
@@ -244,7 +244,7 @@ bar-volume-foreground-4 = #55aa55
 bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = true
-bar-volume-indicator = 
+bar-volume-indicator =
 bar-volume-indicator-font = 2
 bar-volume-fill = ─
 bar-volume-fill-font = 2
@@ -275,7 +275,8 @@ ramp-foreground = ${colors.foreground-alt}
 type = custom/script
 interval = 1
 ; exec = if amixer get Master | tail -n1 | awk '{print $6}' | cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo vol: $(amixer get Master | tail -n1 | awk '{print $4}' | cut -d '[' -f2 | cut -d ']' -f1); else echo "%{F#666}muted%{F-}"; fi
-exec = if pactl list sinks |rg RUNNING -A20 |rg Mute |rg -q no; then echo vol: $(pactl list sinks |rg RUNNING -A20 |rg "^\s+Volume" |cut -f6 -d " "); else echo "%{F#666}muted%{F-}"; fi
+; exec = if pactl list sinks |rg RUNNING -A20 |rg Mute |rg -q no; then echo vol: $(pactl list sinks |rg RUNNING -A20 |rg "^\s+Volume" |cut -f6 -d " "); else echo "%{F#666}muted%{F-}"; fi
+exec = if pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo vol: $(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%; else echo "%{F#666}muted%{F-}"; fi
 ; format-underline = ${colors.aurora4}
 format = <label>
 label = %output%
@@ -284,7 +285,7 @@ label = %output%
 type = custom/script
 
 ; exec = if amixer get Capture |tail -n1 |awk '{print $7}' |cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi
-; exec = if pactl list sources |rg alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo -A20 |rg -q "Mute: no"; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi 
+; exec = if pactl list sources |rg alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo -A20 |rg -q "Mute: no"; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi
 exec = if pactl list sources |rg -q jack_in; then if pactl list sources |rg jack_in -A20 |rg -q "Mute: no"; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi; elif pactl list sources |rg alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo -A20 |rg -q "Mute: no"; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi
 interval = 1
 click-left = amixer set Capture toggle

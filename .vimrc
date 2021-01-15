@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged/')
   Plug 'machakann/vim-highlightedyank'
   Plug 'jpalardy/vim-slime'
   Plug 'jiangmiao/auto-pairs'
+  Plug 'ryanoasis/vim-devicons'
 
   " Languages
   Plug 'lervag/vimtex'
@@ -15,6 +16,7 @@ call plug#begin('~/.vim/plugged/')
   Plug 'arzg/vim-rust-syntax-ext'
   Plug 'eigenfoo/stan-vim'
   Plug 'sheerun/vim-polyglot'
+  Plug 'Chiel92/vim-autoformat'
 
   " Syntax/Highlighting
   Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -80,6 +82,8 @@ set nospell
 
 " Run rustfmt on save
 let g:rustfmt_autosave = 1
+" format files on save
+au BufWrite * :Autoformat
 
 " alias :Prettier for :CocCommand prettier.formatFile
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -201,6 +205,7 @@ au BufNewFile,BufRead *.txt setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.tex setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.md setlocal wrap linebreak nolist
 
+
 " Enable incrementing letters
 set nrformats+=alpha
 
@@ -208,6 +213,10 @@ set nrformats+=alpha
 autocmd FileType crontab setlocal nobackup nowritebackup
 
 " Theming
+" let alt_colorscheme_types = ['.tex']
+
+set background=dark
 colorscheme gruvbox-dark-hard
 hi Normal guibg=NONE ctermbg=NONE
 hi Identifier guifg=#a9b0bf
+autocmd FileType tex colorscheme one

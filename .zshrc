@@ -115,11 +115,15 @@ zinit ice depth=1; zinit light romkatv/powerlevel10k
 export TERM='xterm-256color'
 export PATH=/usr/local/bin:$PATH:~/.local/bin:/opt/cuda/bin:~/.cargo/bin:~/builds/firefox
 export EDITOR='nvim'
+export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
+# export RUSTC_WRAPPER=sccache
+
 
 # | aliases | #
 alias z='f -e zathura'
 alias v='f -e nvim'
-alias c='f -e cat'
+alias c='f -e bat'
+alias ca='bat -P'
 alias j='fasd_cd -d'
 alias e='nvim'
 alias vim='nvim'
@@ -137,6 +141,7 @@ alias pid='while read c1 c2 c3; do echo $c2; done'
 alias mpv='mpv --sub-scale=0.4'
 # alias l='ls -al --color=always'
 alias l='exa -al --git'
+alias lt='exa -al --git -T'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias md='mkdir'
@@ -148,7 +153,7 @@ alias suspend="systemctl suspend"
 alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
-alias texwatch='latexmk -pdf -pvc'
+alias texwatch='latexmk -pdf -pvc -shell-escape'
 alias carta='/home/js/builds/CARTA.AppImage'
 alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
@@ -159,6 +164,8 @@ alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 alias xc='xclip -se c'
 alias xrg='xargs -d "\n"'
 alias ds='& disown'
+alias zrcl='cp /home/js/.config/zathura/zathurarc.light /home/js/.config/zathura/zathurarc'
+alias zrcd='cp /home/js/.config/zathura/zathurarc.dark /home/js/.config/zathura/zathurarc'
 
 # | custom functions | #
 
@@ -203,6 +210,10 @@ gitforkeven() {
     git fetch upstream
     git pull upstream master
     git push
+}
+
+locnb() {
+  jq '.cells[] | select(.cell_type == "code") .source[]' $1 | wc -l
 }
 
 pdftex() {
