@@ -43,7 +43,7 @@ set $left j
 set $right semicolon
 
 # use Mouse+Mod1 to drag floating windows to their wanted position
-floating_modifier Mod1
+floating_modifier Mod4
 
 # start a terminal
 bindsym Mod1+Return exec alacritty
@@ -152,7 +152,7 @@ bindsym Mod1+Shift+8 move container to workspace number $ws8
 bindsym Mod1+Shift+9 move container to workspace number $ws9
 bindsym Mod1+Shift+0 move container to workspace number $ws10
 
-# assign program to workspace 
+# assign program to workspace
 assign [class="Spotify"] 1 # apparently doesnt work (-arch wiki)
 for_window [class="Spotify"] move --no-auto-back-and-forth to workspace $ws9
 
@@ -165,27 +165,27 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
         bindsym $left       resize shrink width 10 px or 10 ppt
-        bindsym $down       resize grow height 10 px or 10 ppt
-        bindsym $up         resize shrink height 10 px or 10 ppt
-        bindsym $right      resize grow width 10 px or 10 ppt
+                bindsym $down       resize grow height 10 px or 10 ppt
+                bindsym $up         resize shrink height 10 px or 10 ppt
+                bindsym $right      resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left        resize shrink width 10 px or 10 ppt
-        bindsym Down        resize grow height 10 px or 10 ppt
-        bindsym Up          resize shrink height 10 px or 10 ppt
-        bindsym Right       resize grow width 10 px or 10 ppt
+# same bindings, but for the arrow keys
+                bindsym Left        resize shrink width 10 px or 10 ppt
+                bindsym Down        resize grow height 10 px or 10 ppt
+                bindsym Up          resize shrink height 10 px or 10 ppt
+                bindsym Right       resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or Mod1+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym Mod1+r mode "default"
+# back to normal: Enter or Escape or Mod1+r
+                bindsym Return mode "default"
+                bindsym Escape mode "default"
+                bindsym Mod1+r mode "default"
 }
 
 bindsym Mod1+r mode "resize"
@@ -220,21 +220,21 @@ bindsym Mod1+r mode "resize"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-# gaps inner 40
-# gaps horizontal 20
-# gaps bottom 40
-# gaps top 60
-gaps top 35
+gaps inner 40
+gaps horizontal 20
+gaps bottom 40
+gaps top 60
+# gaps top 35
 
-# no borders
-new_window none
+# borders
+default_border pixel 2
 
 # screenshot
 bindsym Mod1+Shift+s exec maim -s ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # programs
 bindsym Mod1+d exec rofi -show drun -modi run -show-icons -lines 10 -eh 2 -font "Noto Sans 16" -theme /home/js/.config/rofi/config.rasi
-bindsym Mod1+q exec google-chrome-stable
+bindsym Mod1+q exec firefox
 
 # keyboard shortcuts
 bindcode 49 exec playerctl --player=spotify play-pause
@@ -244,21 +244,34 @@ bindcode 119 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindcode 117 exec maim ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # colour presets
-set $bg #263238
-set $bg2 #424242
-set $inactive #9E9E9E
-set $bar-active $00BFA5
-set $urgent #FF5722
-set $white #FFFFFF
+# nord palette
+set $polar1 #2e3440
+set $polar2 #3b4252
+set $polar3 #434c5e
+set $polar4 #4c566a
+set $snow1 #d8dee9
+set $snow2 #e5e9f0
+set $snow3 #eceff4
+set $aurora1 #ebcb8b
+set $aurora2 #a3be8c
+set $aurora3 #b48ead
+set $aurora4 #d08770
+set $aurora5 #bf616a
+set $frost1 #8fbcbb
+set $frost2 #88c0d0
+set $frost3 #81a1c1
+set $frost4 #5e81ac
+
+
 
 # window colours
-# class                 border background text
-client.focused          $bg    $bg        $white
-client.focused_inactive $bg    $bg        $inactive
-client.unfocused        $bg    $bg        $inactive
+# class                 titlebar_border background text      indicator border
+client.focused          $polar2         $polar2    $snow3    $aurora2  $frost3
+client.focused_inactive $polar2         $polar2    $snow1    $polar2   $polar2
+client.unfocused        $polar2         $polar2    $snow1    $polar2   $polar2
 
 # startup programs
-exec_always feh --bg-scale /home/js/.config/wallpapers/firewatch/2020-12-04.17-39-04.png
+exec_always feh --bg-scale /home/js/.config/wallpapers/ocean.png
 # exec_always pacwall -ug
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
@@ -268,4 +281,4 @@ exec udiskie -a -n -t &
 # exec xrandr --output DP-0 --gamma 0.875 --brightness 0.9
 exec systemctl --user start redshift-gtk.service
 exec find /home/js/screenshots/ -name "*" -type f -mtime +2 -delete;
-exec restart 
+exec restart
