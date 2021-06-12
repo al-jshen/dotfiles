@@ -61,7 +61,6 @@ zinit light-mode for \
 NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
 NODE_GLOBALS+=("node")
 NODE_GLOBALS+=("nvm")
-NODE_GLOBALS+=("jupyter")
 load_nvm() {
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -74,6 +73,7 @@ load_nvm() {
 for cmd in "${NODE_GLOBALS[@]}"; do
     eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
 done
+
 
 
 # | completions | #
@@ -118,6 +118,7 @@ export EDITOR='nvim'
 export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
 export PYTHONPATH=/home/js/miniconda3/lib/python3.9/site-packages:/home/js/miniconda3/lib/python3.9:/home/js/miniconda3/lib/python3.9/lib-dynload:/home/js/.local/lib/python3.9/site-packages
+export PIPEWIRE_LATENCY=256/48000
 
 # export RUSTC_WRAPPER=sccache
 
@@ -158,7 +159,6 @@ alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
 alias texwatch='latexmk -pdf -pvc -shell-escape'
 alias carta='/home/js/builds/CARTA.AppImage'
-alias xournalpp='home/js/builds/xournalpp-1.1.0.dev-nightly.20210429-x86_64.AppImage'
 alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
@@ -244,24 +244,44 @@ lt() {
     fi
 }
 
-# zprof
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f "/home/js/.ghcup/env" ] && source "/home/js/.ghcup/env" # ghcup-env
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/js/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/js/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/js/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/js/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
+# lazy load conda
+PYTHON_GLOBALS=(`find ~/miniconda3/bin -maxdepth 1 -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
+PYTHON_GLOBALS+=("conda")
+PYTHON_GLOBALS+=("pip3")
+PYTHON_GLOBALS+=("ipython")
+
+load_conda() {
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+
+    __conda_setup="$('/home/js/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/home/js/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "/home/js/miniconda3/etc/profile.d/conda.sh"
+        else
+            export PATH="/home/js/miniconda3/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+}
+
+for cmd in "${PYTHON_GLOBALS[@]}"; do
+    eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_conda; ${cmd} \$@; }"
+done
+
+PYTHON_NODE_GLOBALS=("jupyter")
+for cmd in "${PYTHON_NODE_GLOBALS[@]}"; do
+    eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; load_conda; ${cmd} \$@; }"
+done
+
+
+# zprof
