@@ -154,8 +154,6 @@ let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folde
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
 let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
 
-
-
 set completeopt=menuone,longest,noinsert
 set completeopt-=preview
 set shortmess+=c
@@ -174,73 +172,7 @@ set timeoutlen=300
 set undodir=~/.vimdid
 set undofile
 
-
-lua << EOF
-require'nvim-web-devicons'.setup{}
-require'bufferline'.setup{
-options = {
-  separator_style = "thick",
-  show_buffer_icons = true,
-  offsets = {{filetype = "NvimTree", text = "File Explorer", highlight = "Directory", text_align = "left"}}
-  },
-}
-require'nvim-treesitter.configs'.setup {
-ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-highlight = { enable = true },
-indent = { enable = true },
-incremental_selection = {
-enable = true,
-keymaps = {
-  init_selection = "gnn",
-  node_incremental = "grn",
-  scope_incremental = "grc",
-  node_decremental = "grm",
-  },
-},
-textobjects = {enable = true},
-}
-EOF
-
-" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% nvim_lsp
-
-" lua << EOF
-"
-"  local on_attach_vim = function(client)
-"    require'completion'.on_attach(client)
-"    require'diagnostic'.on_attach(client)
-"  end
-"
-"  require'nvim_lsp'.pyls.setup{on_attach=on_attach_vim}
-"  require'nvim_lsp'.jsonls.setup{on_attach=on_attach_vim}
-"  require'nvim_lsp'.rust_analyzer.setup{on_attach=on_attach_vim}
-"  require'nvim_lsp'.texlab.setup{on_attach = on_attach_vim}
-"  require'nvim_lsp'.cssls.setup{on_attach = on_attach_vim, cmd = {"/home/js/.nvm/versions/node/v14.11.0/bin/css-languageserver", "--stdio"}}
-"  require'nvim_lsp'.rome.setup{on_attach = on_attach_vim, cmd = {"/home/js/.nvm/versions/node/v14.11.0/bin/rome", "lsp"}}
-" EOF
-
-"autocmd BufEnter * lua require'completion'.on_attach()
-"
-"" Inlay hints
-"autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-      "\ lua require'lsp_extensions'.inlay_hints{
-" \ prefix = ' » ',
-" \ highlight = "Frost1",
-" \ aligned = false,
-" \ only_current_line = false}
-"
-"" use tabnine
-"let g:completion_chain_complete_list = {
-"   \ 'default': [
-"   \    {'complete_items': ['lsp', 'snippet', 'tabnine' ]},
-"   \    {'mode': '<c-p>'},
-"   \    {'mode': '<c-n>'}
-"   \]
-"\}
-
-" auto pop up diagnostics
-" autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
-
-" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+lua require'config'
 
 " Visualize diagnostics
 let g:diagnostic_enable_virtual_text = 1
@@ -326,7 +258,6 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
-
 " wrap certain filetypes
 au BufNewFile,BufRead *.txt setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.tex setlocal wrap linebreak nolist
@@ -342,10 +273,9 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 " Theming
 " let alt_colorscheme_types = ['.tex']
 
-set background=dark
 colorscheme flow
 hi Normal guibg=NONE ctermbg=NONE
 " hi Identifier guifg=#a9b0bf
-hi Comment NONE
-hi Comment guifg=#808080
+" hi Comment NONE
+" hi Comment guifg=#808080
 autocmd FileType tex colorscheme one
