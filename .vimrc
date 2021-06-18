@@ -10,6 +10,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
 " Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf.vim'
 
 " Languages
 Plug 'lervag/vimtex'
@@ -52,15 +53,12 @@ vnoremap : ;
 " Quick-save
 nmap <leader>w :w<CR>
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" <leader><leader> toggles between buffers
-nnoremap <leader><leader> <c-^>
-
 " use <esc> to clear highlighting after a search
 nnoremap <silent> <esc> :noh<cr><esc>
 
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
+noremap <leader>f :Files<CR>
 
 let g:gitgutter_grep=''
 let g:gitgutter_log=1
@@ -148,7 +146,9 @@ let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and
 let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
 let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
 let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_width = 40 "30 by default
+let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+let g:nvim_tree_width = 30 "30 by default
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
@@ -181,7 +181,8 @@ require'bufferline'.setup{
 options = {
   separator_style = "thick",
   show_buffer_icons = true,
-  }
+  offsets = {{filetype = "NvimTree", text = "File Explorer", highlight = "Directory", text_align = "left"}}
+  },
 }
 require'nvim-treesitter.configs'.setup {
 ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages

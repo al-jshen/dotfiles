@@ -120,6 +120,20 @@ export PYTHONPATH=/home/js/miniconda3/lib/python3.9/site-packages:/home/js/minic
 export PIPEWIRE_LATENCY=256/48000
 export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
 
+
+# for fzf: use `fd` instead of `find`
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+
 # export RUSTC_WRAPPER=sccache
 
 
@@ -170,6 +184,8 @@ alias xrg='xargs -d "\n"'
 alias zrcl='cp /home/js/.config/zathura/zathurarc.light /home/js/.config/zathura/zathurarc'
 alias zrcd='cp /home/js/.config/zathura/zathurarc.dark /home/js/.config/zathura/zathurarc'
 alias t='todo.sh'
+alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git''
+
 
 # | custom functions | #
 
