@@ -342,8 +342,7 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 " let alt_colorscheme_types = ['.tex']
 
 set background=dark
-colorscheme material
-let g:material_theme_style = "palenight"
+colorscheme flow
 hi Normal guibg=NONE ctermbg=NONE
 " hi Identifier guifg=#a9b0bf
 hi Comment NONE
