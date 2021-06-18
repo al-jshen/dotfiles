@@ -38,7 +38,7 @@ function! s:SetHighlight(group, fg, bg, attr)
 endfun
 
 
-let s:bg = { 'gui': '#23272e', 'cterm': 'none' }
+let s:bg = { 'gui': 'none', 'cterm': 'none' }
 let s:fg = { 'gui': '#D8DEE9', 'cterm': 146 }
 let s:invisibles = { 'gui': '#4e5579', 'cterm': 60 }
 let s:comments = { 'gui': '#676e95', 'cterm': 60 }
