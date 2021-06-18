@@ -1,58 +1,64 @@
 configuration {
-  drun-display-format: "{name}";
-font: "MesloLGS NF 30";
-modi: "drun,run,window";
-fullscreen: false;
-            sidebar-mode: false;
-            disable-history: false;
+modi: "drun,window,ssh,file-browser";
+columns: 3;
+font: "NesloLGS NF 30";
+terminal: "alacritty";
+          /* icon-theme: "deepin"; */
+          drun-display-format: "{name}";
+          window-format: "{w}\t{t}";
+fullscreen: true;
+            display-window: "";
+            display-ssh: "";
+            display-drun: "";
+            display-file-browser: "";
 }
 
 * {
-bg: #18181B;
-    bg-alt: #20212C;
-fg: #A0A0AB;
-    fg-alt: #5D5E72;
-
-    background-color: @bg;
-border: 0;
-margin: 0;
-padding: 0;
-spacing: 0;
-}
-
-element, entry, prompt {
-padding: 10;
-         text-color: @fg-alt;
-}
-
-element selected {
-  background-color: @bg-alt;
-  text-color: @fg;
-}
-
-inputbar {
-children: [entry];
-}
-
-listview {
-lines: 10;
-scrollbar: false;
-}
-
-mainbox {
-children: [inputbar, listview];
-}
-
-scrollbar {
-  background-color: @bg-alt;
-  handle-color: @fg;
-padding: 3;
-margin: 0 0 0 10;
+  background-color: transparent;
+color: white;
 }
 
 window {
-border: 0;
-        border-color: @fg-alt;
-padding: 10;
-transparency: "real";
+  background-color: rgba(2, 4, 8, 0.9);
+}
+
+mainbox {
+margin: 10em 15em;
+}
+
+inputbar {
+  background-color: rgba(255, 255, 255, 0.1);
+padding: 0.6em 0 0.6em 0.85em;
+margin: 0 0 1em 0;
+        border-radius: 99em;
+border: 1px;
+        border-color: rgba(255, 255, 255, 0.25);
+}
+
+prompt {
+margin: 0 0.5em 0 0.1em;
+font: "Font Awesome 5 Free 11";
+color: rgba(255, 255, 255, 0.5);
+       vertical-align: 0.5;
+}
+
+element {
+padding: -0.25em 0.5em;
+         border-radius: 0.25em;
+}
+
+element.selected {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+element-icon {
+size: 2.5em;
+}
+
+element-text {
+padding: 1.5em 0.5em;
+}
+
+message {
+margin: 0 0 1em 0;
 }
