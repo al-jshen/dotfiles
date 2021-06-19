@@ -1,8 +1,12 @@
 require('nvim-web-devicons').setup({})
+
+
+local colors = require('colors')
+
 require('bufferline').setup({
   options = {
-    separator_style = "thick",
-    show_buffer_icons = true,
+    -- separator_style = "thick",
+    -- show_buffer_icons = true,
     offsets = {{
       filetype = "NvimTree",
       text = "File Explorer",
@@ -27,6 +31,8 @@ require('nvim-treesitter.configs').setup ({
   },
   textobjects = {enable = true},
 })
+
+require('statusline')
 
 -- " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% nvim_lsp
 
