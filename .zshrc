@@ -111,7 +111,7 @@ zinit light romkatv/powerlevel10k
 
 
 # | exports | #
-export TERM='xterm-256color'
+# export TERM='xterm-256color'
 export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin:/usr/bin:/home/js/.cargo/bin
 export EDITOR='nvim'
 # export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
