@@ -69,7 +69,7 @@ gls.left[6] = {
     provider = "DiffAdd",
     condition = checkwidth,
     icon = "  ",
-    highlight = {colors.white, colors.statusline_bg}
+    highlight = {colors.green, colors.statusline_bg}
   }
 }
 
@@ -78,7 +78,7 @@ gls.left[7] = {
     provider = "DiffModified",
     condition = checkwidth,
     icon = "   ",
-    highlight = {colors.grey_fg2, colors.statusline_bg}
+    highlight = {colors.yellow, colors.statusline_bg}
   }
 }
 
@@ -87,7 +87,7 @@ gls.left[8] = {
     provider = "DiffRemove",
     condition = checkwidth,
     icon = "  ",
-    highlight = {colors.grey_fg2, colors.statusline_bg}
+    highlight = {colors.red, colors.statusline_bg}
   }
 }
 
@@ -192,14 +192,10 @@ gls.right[7] = {
     provider = function()
       local current_line = vim.fn.line(".")
       local total_line = vim.fn.line("$")
-
-      if current_line == 1 then
-        return "  Top "
-      elseif current_line == vim.fn.line("$") then
-        return "  Bot "
-      end
-      local result, _ = math.modf((current_line / total_line) * 100)
-      return "  " .. result .. "% "
+      local column = vim.fn.col(".")
+      return string.format("  %3d/%d:%d ", current_line, total_line, column)
+      -- local result, _ = math.modf((current_line / total_line) * 100)
+      -- return "  " .. result .. "%  "
     end,
     highlight = {colors.green, colors.lightbg}
   }

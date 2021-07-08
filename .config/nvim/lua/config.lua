@@ -6,7 +6,7 @@ local colors = require('colors')
 require('bufferline').setup({
   options = {
     -- separator_style = "thick",
-    -- show_buffer_icons = true,
+    show_buffer_icons = true,
     offsets = {{
       filetype = "NvimTree",
       text = "File Explorer",
