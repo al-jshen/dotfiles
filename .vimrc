@@ -11,6 +11,7 @@ Plug 'akinsho/nvim-bufferline.lua'
 " Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
+Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 
 " Languages
 Plug 'lervag/vimtex'
@@ -20,16 +21,24 @@ Plug 'eigenfoo/stan-vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'Chiel92/vim-autoformat'
+Plug 'tikhomirov/vim-glsl'
+
 
 " Syntax/Highlighting
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 " Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'commit': '153fdc4223594f8079e4025e919605fffd75f6a4'}
 " Plug 'SirVer/ultisnips'
 " Plug 'epilande/vim-react-snippets'
 
 call plug#end()
+
+
+" colors
+colorscheme flow
+" hi Normal guibg=NONE ctermbg=NONE
+" autocmd FileType tex colorscheme one
 
 " set <leader> to space
 let mapleader = "\<Space>"
@@ -51,7 +60,7 @@ vnoremap ; :
 vnoremap : ;
 
 " Quick-save
-nmap <leader>w :w<CR>
+nnoremap <leader>w :w<CR>
 
 " use <esc> to clear highlighting after a search
 nnoremap <silent> <esc> :noh<cr><esc>
@@ -67,7 +76,7 @@ set mouse=a
 " set statusline^=%{coc#status()}
 
 " coc.nvim node path
-let g:coc_node_path = '/home/js/.nvm/versions/node/v14.0.0/bin/node'
+let g:coc_node_path = '/home/js/.nvm/versions/node/v14.15.4/bin/node'
 
 " vim-slime target
 " let g:slime_target = "x11"
@@ -106,9 +115,6 @@ au BufWrite * :Autoformat
 " alias :Prettier for :CocCommand prettier.formatFile
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
-" Disable formatting for some filetypes
-autocmd FileType stan,yaml let b:autoformat_autoindent=0
-autocmd FileType py let b:autoformat=0
 
 " Terminal true colors
 set termguicolors
@@ -148,7 +154,7 @@ let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DI
 let g:nvim_tree_gitignore = 1 "0 by default
 let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
-let g:nvim_tree_width = 30 "30 by default
+let g:nvim_tree_width = 25 "30 by default
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
@@ -263,6 +269,19 @@ au BufNewFile,BufRead *.txt setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.tex setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.md setlocal wrap linebreak nolist
 
+" Disable formatting for some filetypes
+au BufNewFile,BufRead *.stan,*.yaml,*.vert,*.frag let b:autoformat_autoindent=0
+" au BufNewFile,BufRead *.yaml let b:autoformat_autoindent=0
+" au BufNewFile,BufRead *.vert let b:autoformat_autoindent=0
+" au BufNewFile,BufRead *.frag let b:autoformat_autoindent=0
+" autocmd FileType stan,yaml,vert,frag let b:autoformat_autoindent=0
+autocmd FileType py let b:autoformat=0
+
+"
+augroup HiglightTODO
+  autocmd!
+  autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
+augroup END
 
 " Enable incrementing letters
 set nrformats+=alpha
@@ -273,9 +292,3 @@ autocmd FileType crontab setlocal nobackup nowritebackup
 " Theming
 " let alt_colorscheme_types = ['.tex']
 
-colorscheme flow
-hi Normal guibg=NONE ctermbg=NONE
-" hi Identifier guifg=#a9b0bf
-" hi Comment NONE
-" hi Comment guifg=#808080
-autocmd FileType tex colorscheme one
