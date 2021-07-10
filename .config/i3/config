@@ -171,21 +171,21 @@ mode "resize" {
 # Pressing right will grow the window’s width.
 # Pressing up will shrink the window’s height.
 # Pressing down will grow the window’s height.
-        bindsym $left       resize shrink width 10 px or 10 ppt
-                bindsym $down       resize grow height 10 px or 10 ppt
-                bindsym $up         resize shrink height 10 px or 10 ppt
-                bindsym $right      resize grow width 10 px or 10 ppt
+  bindsym $left       resize shrink width 10 px or 10 ppt
+    bindsym $down       resize grow height 10 px or 10 ppt
+    bindsym $up         resize shrink height 10 px or 10 ppt
+    bindsym $right      resize grow width 10 px or 10 ppt
 
 # same bindings, but for the arrow keys
-                bindsym Left        resize shrink width 10 px or 10 ppt
-                bindsym Down        resize grow height 10 px or 10 ppt
-                bindsym Up          resize shrink height 10 px or 10 ppt
-                bindsym Right       resize grow width 10 px or 10 ppt
+    bindsym Left        resize shrink width 10 px or 10 ppt
+    bindsym Down        resize grow height 10 px or 10 ppt
+    bindsym Up          resize shrink height 10 px or 10 ppt
+    bindsym Right       resize grow width 10 px or 10 ppt
 
 # back to normal: Enter or Escape or Mod1+r
-                bindsym Return mode "default"
-                bindsym Escape mode "default"
-                bindsym Mod1+r mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Mod1+r mode "default"
 }
 
 bindsym Mod1+r mode "resize"
@@ -220,27 +220,27 @@ bindsym Mod1+r mode "resize"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-gaps inner 40
-gaps horizontal 20
-gaps bottom 40
-gaps top 60
+gaps inner 20
+gaps horizontal 10
+gaps bottom 20
+gaps top 40
 # gaps top 35
 
 # borders
 default_border pixel 2
 
 # screenshot
-bindsym Mod1+Shift+s exec maim -s ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
+bindsym Mod1+Shift+s exec maim -s --hidecursor ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # programs
 bindsym Mod1+d exec rofi -show drun -modi run -show-icons -lines 10 -eh 2 -font "Noto Sans 16" -theme /home/js/.config/rofi/config.rasi
-bindsym Mod1+q exec firefox
+bindsym Mod1+q exec google-chrome-stable
 
 # keyboard shortcuts
 bindcode 49 exec playerctl --player=spotify play-pause
 bindcode 112 exec notion-app
 # bindcode 119 exec amixer set Capture toggle
-bindcode 119 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindcode 119 exec pactl set-source-mute alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo-input toggle
 bindcode 117 exec maim ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # colour presets
@@ -266,12 +266,12 @@ set $frost4 #5e81ac
 
 # window colours
 # class                 titlebar_border background text      indicator border
-client.focused          $polar2         $polar2    $snow3    $aurora2  $frost3
+client.focused          $polar2         $polar2    $snow3    $frost3  $frost3
 client.focused_inactive $polar2         $polar2    $snow1    $polar2   $polar2
 client.unfocused        $polar2         $polar2    $snow1    $polar2   $polar2
 
 # startup programs
-exec_always feh --bg-scale /home/js/.config/wallpapers/ocean.png
+exec_always feh --bg-scale /home/js/.config/wallpapers/ocean.jpg
 # exec_always pacwall -ug
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
