@@ -72,14 +72,14 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Noto Sans:style=Regular:size=14;4
-font-1 = FontAwesome5Free:style=Regular:size=15;4
-font-2 = FontAwesome5Free:style=Solid:size=15;4
-font-3 = FontAwesome5Brands:style=Regular:size=15;4
-font-4 = FontAwesome:style=Regular:size=15;4
+font-0 = Roboto:style=Regular:size=17;4
+font-1 = FontAwesome5Free:style=Regular:size=16;4
+font-2 = FontAwesome5Free:style=Solid:size=16;4
+font-3 = FontAwesome5Brands:style=Regular:size=16;4
+font-4 = FontAwesome:style=Regular:size=16;4
 
-modules-left = i3 xwindow
-modules-center = spotify
+modules-left = i3
+modules-center =
 modules-right = filesystem sound mic_toggle usage_memory usage_cpu usage_gpu temperature_cpu temperature_gpu wlan date powermenu
 
 tray-position = right
@@ -108,8 +108,9 @@ interval = 30
 spacing = 2
 
 mount-0 = /
-mount-1 = /data
-mount-2 = /mnt/t5
+mount-1 = /d
+mount-2 = /st
+mount-3 = /mnt/t5
 
 label-mounted = %{F#aae}%mountpoint%%{F-}: %percentage_used%%
 ; label-mounted-underline = ${colors.frost1}
@@ -191,15 +192,16 @@ label = %output%%
 
 [module/wlan]
 type = internal/network
-interface = wlo1
-interval = 10
+interface = enp34s0
+interval = 3
+accumulate-stats = true
 
 format-connected-prefix = "  "
-format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
 format-connected-underline = ${colors.aurora5}
 label-connected = %local_ip%
 
-format-disconnected =
+format-disconnected = "Not connected."
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -227,6 +229,7 @@ label = %date% %time%
 
 [module/pulseaudio]
 type = internal/pulseaudio
+sink = @DEFAULT_SINK@
 
 ; format-prefix = "  "
 format-volume = <label-volume> <bar-volume>
@@ -276,8 +279,8 @@ type = custom/script
 interval = 1
 ; exec = if amixer get Master | tail -n1 | awk '{print $6}' | cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo vol: $(amixer get Master | tail -n1 | awk '{print $4}' | cut -d '[' -f2 | cut -d ']' -f1); else echo "%{F#666}muted%{F-}"; fi
 ; exec = if pactl list sinks |rg RUNNING -A20 |rg Mute |rg -q no; then echo vol: $(pactl list sinks |rg RUNNING -A20 |rg "^\s+Volume" |cut -f6 -d " "); else echo "%{F#666}muted%{F-}"; fi
-exec = if pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo vol: $(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%; else echo "%{F#666}muted%{F-}"; fi
-; format-underline = ${colors.aurora4}
+exec = if pactl get-default-sink |rg -q "bluez_output"; then echo vol: $(pactl get-sink-volume @DEFAULT_SINK@ |cut -d' ' -f6) %{F#4C6EF5}%{F-}; elif pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo vol: $(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%; else echo "%{F#666}muted%{F-}"; fi;
+format-underline = ${colors.aurora4}
 format = <label>
 label = %output%
 
