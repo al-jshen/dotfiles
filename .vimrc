@@ -12,6 +12,7 @@ Plug 'akinsho/nvim-bufferline.lua'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
+Plug 'segeljakt/vim-silicon'
 
 " Languages
 Plug 'lervag/vimtex'
@@ -20,7 +21,7 @@ Plug 'arzg/vim-rust-syntax-ext'
 Plug 'eigenfoo/stan-vim'
 " Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
 Plug 'tikhomirov/vim-glsl'
 
 
@@ -33,15 +34,19 @@ Plug 'neoclide/coc.nvim', {'commit': '153fdc4223594f8079e4025e919605fffd75f6a4'}
 " Plug 'epilande/vim-react-snippets'
 
 call plug#end()
+"
+" set <leader> to space
+let mapleader = "\<Space>"
 
+" Silicon
+let g:silicon = {}
+let g:silicon['output'] = '/home/js/screenshots/{time:%Y-%m-%d.%H-%M-%S.png}'
+xnoremap <leader>s :Silicon<CR>
 
 " colors
 colorscheme flow
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
-
-" set <leader> to space
-let mapleader = "\<Space>"
 
 " disable arrow keys in normal mode
 noremap <Up> <Nop>
@@ -56,10 +61,12 @@ nnoremap <silent><Left> :BufferLineCyclePrev<CR>
 " use ; instead of : to trigger command mode
 nnoremap ; :
 nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+xnoremap ; :
+xnoremap : ;
 
-" Quick-save
+" quick-save, don't format
+nnoremap <leader>W :noa w<CR>
+" quick save, format
 nnoremap <leader>w :w<CR>
 
 " use <esc> to clear highlighting after a search
@@ -107,13 +114,14 @@ set nospell
 " Semshi Configurations
 "let g:semshi#always_update_all_highlights = 1
 
+" alias :Prettier for :CocCommand prettier.formatFile
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
 " Run rustfmt on save
 let g:rustfmt_autosave = 1
 " format files on save
-au BufWrite * :Autoformat
-
-" alias :Prettier for :CocCommand prettier.formatFile
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" map <F3> :Autoformat
+" au BufWrite * :Autoformat :Prettier
 
 
 " Terminal true colors
@@ -255,7 +263,6 @@ set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
 set incsearch
 set ignorecase
 set smartcase
-set gdefault
 
 " Search results centered please
 nnoremap <silent> n nzz
@@ -269,15 +276,15 @@ au BufNewFile,BufRead *.txt setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.tex setlocal wrap linebreak nolist
 au BufNewFile,BufRead *.md setlocal wrap linebreak nolist
 
-" Disable formatting for some filetypes
-au BufNewFile,BufRead *.stan,*.yaml,*.vert,*.frag let b:autoformat_autoindent=0
-" au BufNewFile,BufRead *.yaml let b:autoformat_autoindent=0
-" au BufNewFile,BufRead *.vert let b:autoformat_autoindent=0
-" au BufNewFile,BufRead *.frag let b:autoformat_autoindent=0
-" autocmd FileType stan,yaml,vert,frag let b:autoformat_autoindent=0
-autocmd FileType py let b:autoformat=0
+" custom comments for js, jsx
+autocmd! BufRead,BufNewFile *.{jsx,jx,js} setlocal filetype=javascript.jsx
+autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 
-"
+
+" Disable formatting for some filetypes
+au BufNewFile,BufRead *.stan,*.vert,*.frag let b:autoformat_autoindent=0
+
+" highlight the word TODO
 augroup HiglightTODO
   autocmd!
   autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
