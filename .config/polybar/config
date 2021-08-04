@@ -180,7 +180,7 @@ type = internal/memory
 interval = 2
 ; format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.aurora3
+format-underline = ${colors.aurora3}
 label = %percentage_used%%
 
 [module/usage_gpu]
