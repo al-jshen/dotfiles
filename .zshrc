@@ -122,7 +122,7 @@ export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
 
 
 # for fzf: use `fd` instead of `find`
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 _fzf_compgen_path() {
@@ -138,10 +138,11 @@ _fzf_compgen_dir() {
 
 
 # | aliases | #
+alias bat='bat -pp'
 alias z='f -e zathura'
 alias v='f -e nvim'
 alias c='f -e bat'
-alias ca='bat -P'
+alias ca='bat'
 alias j='fasd_cd -d'
 alias e='nvim'
 alias vim='nvim'
@@ -157,7 +158,7 @@ alias yr="cal -y"
 alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias mpv='mpv --sub-scale=0.4'
-alias feh='feh --conversion-timeout 1'
+alias feh='feh --conversion-timeout 1 --scale-down --auto-zoom'
 # alias l='ls -al --color=always'
 alias l='exa -al --git'
 alias ...='cd ../..'
@@ -185,21 +186,27 @@ alias zrcl='cp /home/js/.config/zathura/zathurarc.light /home/js/.config/zathura
 alias zrcd='cp /home/js/.config/zathura/zathurarc.dark /home/js/.config/zathura/zathurarc'
 alias t='todo.sh'
 alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git''
+alias gc='gh repo clone'
 
+# vulkan sdk
+source /home/js/builds/vulkansdk/1.2.162.1/setup-env.sh
 
-# | custom functions | #
+# completions
+source /home/js/.config/gh/completions.zsh
 
 source "/usr/share/fzf/key-bindings.zsh"
 source "/usr/share/fzf/completion.zsh"
 
-gc() {
-  arg=$1
-  if [ ${arg[1,18]} = "https://github.com" ]; then
-    git clone $arg
-  else
-    git clone https://github.com/$arg.git
-  fi
-}
+# | custom functions | #
+
+# gc() {
+#   arg=$1
+#   if [ ${arg[1,18]} = "https://github.com" ]; then
+#     git clone $arg
+#   else
+#     git clone https://github.com/$arg.git
+#   fi
+# }
 
 pdfcomp() {
   /usr/bin/gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
