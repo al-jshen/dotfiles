@@ -7,30 +7,10 @@
 # Load speed profiling. Uncomment this line and the last line in the file.
 # zmodload zsh/zprof
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# .zshrc
-setopt autocd # cd without typing cd
-setopt rm_star_silent # dont ask to confirm rm
-
-# autojump
-# source /etc/profile.d/autojump.sh
-
-# fasd
-eval "$(fasd --init auto)"
-
-#source /home/js/programs/termwrap/termwrap.plugin.zsh
-
-#source /home/js/test.zsh
 
 # save zsh history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 HISTFILE=~/.zsh_history
 
 ### Added by Zinit's installer
@@ -56,27 +36,8 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 
-# Lazy-loading nvm to speed up shell start time
-
-NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-NODE_GLOBALS+=("nvm")
-load_nvm() {
-  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-  if [ -f "$NVM_DIR/bash_completion" ]; then
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-  fi
-}
-
-# Making global keywords trigger the lazy loading
-for cmd in "${NODE_GLOBALS[@]}"; do
-  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
-done
-
-
-
 # zinit stuff
-zinit ice blockf wait lucid
+zinit ice wait lucid blockf
 zinit light zsh-users/zsh-completions
 
 zinit ice wait lucid atload"_zsh_autosuggest_start"
@@ -86,28 +47,11 @@ zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid atinit'zpcompinit; zpcdreplay'
 zinit light zdharma/fast-syntax-highlighting
 
-# completion when typing middle of word
-zstyle ':completion:*' completer _complete
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+setopt autocd # cd without typing cd
+setopt rm_star_silent # dont ask to confirm rm
 
-# shift tab to go through completion menu backwards
-bindkey '^[[Z' reverse-menu-complete
-# control+backspace to delete a word at a time
-bindkey '^H' backward-kill-word
-
-# no timeout when entering normal mode
-KEYTIMEOUT=0
-
-# | prompt | #
-# fpath+=('/home/js/.nvm/versions/node/v13.12.0/lib/node_modules/pure-prompt/functions')
-# zinit ice wait lucid compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
-# zinit light sindresorhus/pure
-# autoload -U promptinit; promptinit
-# prompt pure
-# prompt_newline='%666v'
-# PROMPT=" $PROMPT"
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
+# autojump
+# source /etc/profile.d/autojump.sh
 
 
 # | exports | #
@@ -119,7 +63,8 @@ export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
 export PYTHONPATH=/home/js/miniconda3/lib/python3.9/site-packages:/home/js/miniconda3/lib/python3.9:/home/js/miniconda3/lib/python3.9/lib-dynload:/home/js/.local/lib/python3.9/site-packages
 export PIPEWIRE_LATENCY=256/48000
 export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
-
+# export LS_COLORS="$(vivid generate one-dark)"
+source "/home/js/.config/zsh/load_lscolors.zsh"
 
 # for fzf: use `fd` instead of `find`
 export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
@@ -133,6 +78,19 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
+# fasd
+source "/home/js/.config/zsh/load_fasd.zsh"
+
+
+# completion when typing middle of word
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+
+# shift tab to go through completion menu backwards
+bindkey '^[[Z' reverse-menu-complete
+
+# no timeout when entering normal mode
+KEYTIMEOUT=0
 
 # export RUSTC_WRAPPER=sccache
 
@@ -141,10 +99,9 @@ _fzf_compgen_dir() {
 alias bat='bat -pp'
 alias z='f -e zathura'
 alias v='f -e nvim'
-alias c='f -e bat'
-alias ca='bat'
+alias c='echo -ne "\033c"'
+alias cat='bat'
 alias j='fasd_cd -d'
-alias e='nvim'
 alias vim='nvim'
 alias g='git'
 alias gp='git push'
@@ -152,8 +109,6 @@ alias gs="git status"
 alias ga='git add --all'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
-alias grao='git remote add origin'
-alias rot13="tr '[A-Za-z]' '[N-ZA-Mn-za-m]'"
 alias yr="cal -y"
 alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
 alias pid='while read c1 c2 c3; do echo $c2; done'
@@ -178,42 +133,36 @@ alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 alias rsnative='RUSTFLAGS="-C target-cpu=native"'
-alias timeshell='echo $SHELL; for i in {0..10}; do time $SHELL -i -c exit; done'
 alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
 alias xc='xclip -se c'
 alias xrg='xargs -d "\n"'
-alias zrcl='cp /home/js/.config/zathura/zathurarc.light /home/js/.config/zathura/zathurarc'
-alias zrcd='cp /home/js/.config/zathura/zathurarc.dark /home/js/.config/zathura/zathurarc'
-alias t='todo.sh'
 alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git''
 alias gc='gh repo clone'
+alias hf='hyperfine'
 
 # vulkan sdk
-source /home/js/builds/vulkansdk/1.2.162.1/setup-env.sh
+source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
 
 # completions
-source /home/js/.config/gh/completions.zsh
-
+source "/home/js/.config/gh/completions.zsh"
 source "/usr/share/fzf/key-bindings.zsh"
 source "/usr/share/fzf/completion.zsh"
 
-# | custom functions | #
 
-# gc() {
-#   arg=$1
-#   if [ ${arg[1,18]} = "https://github.com" ]; then
-#     git clone $arg
-#   else
-#     git clone https://github.com/$arg.git
-#   fi
-# }
+# | prompt | #
+# fpath+=('/home/js/.nvm/versions/node/v13.12.0/lib/node_modules/pure-prompt/functions')
+# zinit ice wait lucid compile'(pure|async).zsh' pick'async.zsh' src'pure.zsh'
+# zinit light sindresorhus/pure
+# autoload -U promptinit; promptinit
+# prompt pure
+# prompt_newline='%666v'
+# PROMPT=" $PROMPT"
+
+
+# | custom functions | #
 
 pdfcomp() {
   /usr/bin/gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
-}
-
-kl() {
-  kill $(ps -aux |grep $1 |pid) > /dev/null 2>&1
 }
 
 vcomp() {
@@ -232,13 +181,6 @@ audex() {
   ffmpeg -i $1 -vn -acodec copy $2
 }
 
-gitforkeven() {
-  git remote add upstream $1
-  git fetch upstream
-  git pull upstream master
-  git push
-}
-
 locnb() {
   jq '.cells[] | select(.cell_type == "code") .source[]' $1 | wc -l
 }
@@ -254,10 +196,6 @@ vpn() {
   sudo openvpn /etc/openvpn/$1.ovpn
 }
 
-vcreate() {
-  ffmpeg -y -framerate $3 -i $1 -c:v libx264 $2
-}
-
 lt() {
   if [ -n "$1" ]
   then
@@ -268,9 +206,22 @@ lt() {
 }
 
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Lazy-loading nvm to speed up shell start time
 
+NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | sed 's|.*/||' | sort | uniq`)
+NODE_GLOBALS+=("nvm")
+load_nvm() {
+  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+  if [ -f "$NVM_DIR/bash_completion" ]; then
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+  fi
+}
+
+# Making global keywords trigger the lazy loading
+for cmd in "${NODE_GLOBALS[@]}"; do
+  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
+done
 
 # lazy load conda
 PYTHON_GLOBALS=(`ls -1 /home/js/miniconda3/bin`)
@@ -305,5 +256,6 @@ for cmd in "${PYTHON_NODE_GLOBALS[@]}"; do
   eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; load_conda; ${cmd} \$@; }"
 done
 
+eval "$(starship init zsh)"
 
 # zprof
