@@ -17,20 +17,20 @@ ahead = "⇡${count}"
 diverged = "⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
 
-conflicted = "c${count} "
-stashed = "s\\$${count} "
+conflicted = "c\\[${count}\\]"
+stashed = "s\\[${count}\\]"
 deleted = "-d\\[${count}\\]"
 
-staged = "+s${count} "
+staged = "+s\\[${count}\\]"
 untracked = "+n\\[${count}\\]"
 
-renamed = "r${count} "
+renamed = "r\\[${count}\\]"
 modified = "m\\[${count}\\]"
 
 format = """
-([$ahead_behind ](bold green))\
-([$staged$untracked ](bold green))\
-([$renamed$modified ](bold yellow))\
-([$conflicted$stashed$deleted ](bold red))\
+([$ahead_behind](bold green) )\
+([$staged$untracked](bold green) )\
+([$renamed$modified](bold yellow) )\
+([$conflicted$stashed$deleted](bold red) )\
 """
 
