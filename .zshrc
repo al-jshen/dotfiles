@@ -7,34 +7,32 @@
 # Load speed profiling. Uncomment this line and the last line in the file.
 # zmodload zsh/zprof
 
-
 # save zsh history
 HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history
 
 ### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+if [[ ! -f /home/js/.zinit/bin/zinit.zsh ]]; then
   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-  command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+  command mkdir -p "/home/js/.zinit" && command chmod g-rwX "/home/js/.zinit"
+  command git clone https://github.com/zdharma/zinit "/home/js/.zinit/bin" && \
     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+source "/home/js/.zinit/bin/zinit.zsh"
+# autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-  zinit-zsh/z-a-patch-dl \
-  zinit-zsh/z-a-as-monitor \
-  zinit-zsh/z-a-bin-gem-node
+# # Load a few important annexes, without Turbo
+# # (this is currently required for annexes)
+# zinit light-mode for \
+#   zinit-zsh/z-a-patch-dl \
+#   zinit-zsh/z-a-as-monitor \
+#   zinit-zsh/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
-
 
 # zinit stuff
 zinit ice wait lucid blockf
@@ -60,11 +58,13 @@ export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin
 export EDITOR='nvim'
 # export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
-export PYTHONPATH=/home/js/miniconda3/lib/python3.9/site-packages:/home/js/miniconda3/lib/python3.9:/home/js/miniconda3/lib/python3.9/lib-dynload:/home/js/.local/lib/python3.9/site-packages
+export PYTHONPATH=/usr/bin/python3
 export PIPEWIRE_LATENCY=256/48000
 export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
 # export LS_COLORS="$(vivid generate one-dark)"
 source "/home/js/.config/zsh/load_lscolors.zsh"
+export STARSHIP_CONFIG="/home/js/.config/starship.toml"
+
 
 # for fzf: use `fd` instead of `find`
 export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
@@ -210,6 +210,8 @@ lt() {
 
 NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | sed 's|.*/||' | sort | uniq`)
 NODE_GLOBALS+=("nvm")
+NODE_GLOBALS+=("node")
+NODE_GLOBALS+=("jupyter")
 load_nvm() {
   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -223,39 +225,6 @@ for cmd in "${NODE_GLOBALS[@]}"; do
   eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
 done
 
-# lazy load conda
-PYTHON_GLOBALS=(`ls -1 /home/js/miniconda3/bin`)
-PYTHON_GLOBALS+=("conda")
-PYTHON_GLOBALS+=("pip3")
-PYTHON_GLOBALS+=("ipython")
-
-load_conda() {
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-
-  __conda_setup="$('/home/js/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-  else
-    if [ -f "/home/js/miniconda3/etc/profile.d/conda.sh" ]; then
-      . "/home/js/miniconda3/etc/profile.d/conda.sh"
-    else
-      export PATH=/home/js/miniconda3/bin:$PATH
-    fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
-}
-
-for cmd in "${PYTHON_GLOBALS[@]}"; do
-  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_conda; ${cmd} \$@; }"
-done
-
-PYTHON_NODE_GLOBALS=("jupyter")
-for cmd in "${PYTHON_NODE_GLOBALS[@]}"; do
-  eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; load_conda; ${cmd} \$@; }"
-done
-
-eval "$(starship init zsh)"
+source <(/usr/local/bin/starship init zsh --print-full-init)
 
 # zprof
