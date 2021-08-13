@@ -12,14 +12,14 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history
 
-### Added by Zinit's installer
-if [[ ! -f /home/js/.zinit/bin/zinit.zsh ]]; then
-  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-  command mkdir -p "/home/js/.zinit" && command chmod g-rwX "/home/js/.zinit"
-  command git clone https://github.com/zdharma/zinit "/home/js/.zinit/bin" && \
-    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-    print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
+# ### Added by Zinit's installer
+# if [[ ! -f /home/js/.zinit/bin/zinit.zsh ]]; then
+#   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+#   command mkdir -p "/home/js/.zinit" && command chmod g-rwX "/home/js/.zinit"
+#   command git clone https://github.com/zdharma/zinit "/home/js/.zinit/bin" && \
+#     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+#     print -P "%F{160}▓▒░ The clone has failed.%f%b"
+# fi
 
 source "/home/js/.zinit/bin/zinit.zsh"
 # autoload -Uz _zinit
@@ -67,7 +67,7 @@ export STARSHIP_CONFIG="/home/js/.config/starship.toml"
 
 
 # for fzf: use `fd` instead of `find`
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git . ~'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 _fzf_compgen_path() {
@@ -80,7 +80,6 @@ _fzf_compgen_dir() {
 
 # fasd
 source "/home/js/.config/zsh/load_fasd.zsh"
-
 
 # completion when typing middle of word
 zstyle ':completion:*' completer _complete
@@ -124,9 +123,9 @@ alias wific='sudo wpa_supplicant -B -i wlo1 -c /etc/wpa_supplicant/home.conf'
 alias rmorphans='sudo pacman -Rns $(pacman -Qtdq)'
 alias cleanpkgs='sudo paccache -r -k 1 --min-mtime "30 days ago"'
 alias suspend="systemctl suspend"
-alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
+alias xev="xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\''"
 alias pid='while read c1 c2 c3; do echo $c2; done'
-alias sortmirrors='sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup && curl -s "https://www.archlinux.org/mirrorlist/?protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 20 - | sudo tee /etc/pacman.d/mirrorlist'
+alias sortmirrors='reflector --sort rate --protocol http,https -n 5 --latest 20 --verbose --country Canada,"United States"'
 alias texwatch='latexmk -pdf -pvc -shell-escape'
 alias carta='/home/js/builds/CARTA.AppImage'
 alias clss='rm -f /home/js/screenshots/*'
@@ -209,9 +208,7 @@ lt() {
 # Lazy-loading nvm to speed up shell start time
 
 NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | sed 's|.*/||' | sort | uniq`)
-NODE_GLOBALS+=("nvm")
-NODE_GLOBALS+=("node")
-NODE_GLOBALS+=("jupyter")
+NODE_GLOBALS+=("nvm" "node" "jupyter")
 load_nvm() {
   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
