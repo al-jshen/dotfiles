@@ -25,8 +25,8 @@ source "/home/js/.zinit/bin/zinit.zsh"
 # autoload -Uz _zinit
 # (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# # Load a few important annexes, without Turbo
-# # (this is currently required for annexes)
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
 # zinit light-mode for \
 #   zinit-zsh/z-a-patch-dl \
 #   zinit-zsh/z-a-as-monitor \
@@ -35,7 +35,7 @@ source "/home/js/.zinit/bin/zinit.zsh"
 ### End of Zinit's installer chunk
 
 # zinit stuff
-zinit ice wait lucid blockf
+zinit ice blockf wait lucid
 zinit light zsh-users/zsh-completions
 
 zinit ice wait lucid atload"_zsh_autosuggest_start"
@@ -67,15 +67,15 @@ export STARSHIP_CONFIG="/home/js/.config/starship.toml"
 
 
 # for fzf: use `fd` instead of `find`
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git . ~'
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --no-ignore . ~'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+  fd --hidden --follow --no-ignore . "$1"
 }
 
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type d --hidden --follow --no-ignore . "$1"
 }
 
 # fasd
@@ -123,7 +123,7 @@ alias wific='sudo wpa_supplicant -B -i wlo1 -c /etc/wpa_supplicant/home.conf'
 alias rmorphans='sudo pacman -Rns $(pacman -Qtdq)'
 alias cleanpkgs='sudo paccache -r -k 1 --min-mtime "30 days ago"'
 alias suspend="systemctl suspend"
-alias xev="xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\''"
+alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias sortmirrors='reflector --sort rate --protocol http,https -n 5 --latest 20 --verbose --country Canada,"United States"'
 alias texwatch='latexmk -pdf -pvc -shell-escape'
@@ -138,6 +138,7 @@ alias xrg='xargs -d "\n"'
 alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git''
 alias gc='gh repo clone'
 alias hf='hyperfine'
+alias ssh='TERM=xterm-256color ssh'
 
 # vulkan sdk
 source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
@@ -204,6 +205,19 @@ lt() {
   fi
 }
 
+ch() {
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  cp -f /home/js/.config/google-chrome/Default/History /tmp/h
+
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs google-chrome-stable
+}
+
 
 # Lazy-loading nvm to speed up shell start time
 
@@ -223,5 +237,7 @@ for cmd in "${NODE_GLOBALS[@]}"; do
 done
 
 source <(/usr/local/bin/starship init zsh --print-full-init)
+
+# cd ~
 
 # zprof
