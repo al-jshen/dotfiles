@@ -125,9 +125,8 @@ alias cleanpkgs='sudo paccache -r -k 1 --min-mtime "30 days ago"'
 alias suspend="systemctl suspend"
 alias xev='xev | awk -F'\''[ )]+'\'' '\''/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'\'''
 alias pid='while read c1 c2 c3; do echo $c2; done'
-alias sortmirrors='reflector --sort rate --protocol http,https -n 5 --latest 20 --verbose --country Canada,"United States"'
+alias sortmirrors='reflector --sort rate --protocol http,https -n 10 --latest 20 --verbose --country Canada,"United States"'
 alias texwatch='latexmk -pdf -pvc -shell-escape'
-alias carta='/home/js/builds/CARTA.AppImage'
 alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
@@ -211,11 +210,14 @@ ch() {
 
   cp -f /home/js/.config/google-chrome/Default/History /tmp/h
 
-  sqlite3 -separator $sep /tmp/h \
+  op=$(sqlite3 -separator $sep /tmp/h \
     "select substr(title, 1, $cols), url
      from urls order by last_visit_time desc" |
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs google-chrome-stable
+  fzf --ansi --multi) 
+
+  url=$(echo $op | sed 's#.*\(https*://\)#\1#')
+  xdg-open $url
 }
 
 
