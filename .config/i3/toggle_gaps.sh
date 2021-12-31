@@ -5,7 +5,7 @@ if [ "$has_gaps" = true ]; then
   i3-msg gaps horizontal current set 0;
   i3-msg gaps bottom current set 0;
   i3-msg gaps top current set 35;
-  i3-msg '[class=.*] border none'
+  i3-msg '[class=.*] border pixel 1'
 else
   i3-msg gaps inner current set 20;
   i3-msg gaps horizontal current set 10;

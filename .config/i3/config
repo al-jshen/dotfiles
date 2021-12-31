@@ -36,7 +36,7 @@ exec --no-startup-id nm-applet
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute alsa_output.pci-0000_28_00.4.analog-stereo toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
@@ -232,21 +232,24 @@ gaps top 35
 # script to toggle gaps and borders
 bindsym Mod1+Shift+g exec /home/js/.config/i3/toggle_gaps.sh
 
+# toggle compositor
+bindsym Mod1+Shift+p exec /home/js/.config/i3/toggle_compositor.sh
+
 # borders
-default_border pixel 2
+default_border pixel 1
 
 # screenshot
 bindsym Mod1+Shift+s exec maim -s --hidecursor ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # programs
 bindsym Mod1+d exec rofi -show drun -modi run -show-icons -lines 10 -eh 2 -font "Noto Sans 16" -theme /home/js/.config/rofi/config.rasi
-bindsym Mod1+q exec google-chrome-stable
+bindsym Mod1+q exec chromium
 
 # keyboard shortcuts
 bindcode 49 exec playerctl --player=spotify play-pause
 bindcode 112 exec notion-app
 # bindcode 119 exec amixer set Capture toggle
-bindcode 119 exec pactl set-source-mute alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo-input toggle
+bindcode 119 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindcode 117 exec maim ~/screenshots/$(date "+%Y-%m-%d.%H-%M-%S").png -b 0
 
 # colour presets
@@ -277,7 +280,7 @@ client.focused_inactive $polar2         $polar2    $snow1    $polar2   $polar2
 client.unfocused        $polar2         $polar2    $snow1    $polar2   $polar2
 
 # startup programs
-exec_always feh --bg-scale /home/js/.config/wallpapers/ocean.jpg
+exec_always feh --bg-scale /home/js/.config/wallpapers/misty_sweden.png
 # exec_always pacwall -ug
 exec_always --no-startup-id /home/js/.config/polybar/launch.sh
 exec xrdb .Xresources
