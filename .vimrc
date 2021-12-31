@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged/')
 " General
-" Plug 'scrooloose/nerdtree'
+
+Plug 'github/copilot.vim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-commentary'
@@ -13,6 +14,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
+Plug 'tpope/vim-fugitive'
+
+Plug 'anufrievroman/vim-angry-reviewer'
 
 " Languages
 Plug 'lervag/vimtex'
@@ -23,27 +27,52 @@ Plug 'eigenfoo/stan-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'Chiel92/vim-autoformat'
 Plug 'tikhomirov/vim-glsl'
+Plug 'JuliaEditorSupport/julia-vim'
 
 
 " Syntax/Highlighting
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 " Completion
-Plug 'neoclide/coc.nvim', {'commit': '153fdc4223594f8079e4025e919605fffd75f6a4'}
+Plug 'neoclide/coc.nvim'
 " Plug 'SirVer/ultisnips'
 " Plug 'epilande/vim-react-snippets'
 
 call plug#end()
-"
+
 " set <leader> to space
 let mapleader = "\<Space>"
 
 " Silicon
-let g:silicon = {}
+let g:silicon = {
+      \   'theme':              'Dracula',
+      \   'font':                  'Hack',
+      \   'background':         '#AAAAFF',
+      \   'shadow-color':       '#555555',
+      \   'line-pad':                   2,
+      \   'pad-horiz':                 80,
+      \   'pad-vert':                 100,
+      \   'shadow-blur-radius':         0,
+      \   'shadow-offset-x':            0,
+      \   'shadow-offset-y':            0,
+      \   'line-number':           v:true,
+      \   'round-corner':          v:true,
+      \   'window-controls':       v:true,
+      \ }
 let g:silicon['output'] = '/home/js/screenshots/{time:%Y-%m-%d.%H-%M-%S.png}'
-xnoremap <leader>s :Silicon<CR>
+xnoremap <leader>s :'<,'>Silicon<CR>
 
-" colors
+" angry reviewer
+let g:AngryReviewerEnglish = 'american'
+nnoremap <leader>ar :AngryReviewer<cr>
+
+" fugitive shortcuts
+nnoremap <leader>ga :Git add .<CR>
+nnoremap <leader>m :Git commit<CR>
+nnoremap <leader>p :Git! push<CR>
+
+
+" " colors
 colorscheme flow
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
@@ -83,7 +112,9 @@ set mouse=a
 " set statusline^=%{coc#status()}
 
 " coc.nvim node path
-let g:coc_node_path = '/home/js/.nvm/versions/node/v14.15.4/bin/node'
+let g:coc_node_path = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
+" neovim nodejs path
+
 
 " vim-slime target
 " let g:slime_target = "x11"
@@ -129,11 +160,12 @@ set termguicolors
 set t_CO=256
 
 " Python Provider
-let g:python3_host_prog = '/home/js/miniconda3/bin/python'
+let g:python3_host_prog = '/usr/bin/python'
 
 " Latex stuff
 let g:tex_flavor = 'latex'
 " let g:vimtex_view_method = 'zathura'
+
 
 " UTF-8 Support
 set encoding=utf-8
@@ -144,24 +176,12 @@ set bs=2
 " Faster update time
 set updatetime=100
 
-" " Nerdtree Configurations
-" " let g:NERDTreeHijackNetrw=0
-" map <silent> <C-n> ;NERDTreeToggle<CR>
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" let g:NERDTreeMouseMode=3
-
 nnoremap <silent> <C-n> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 
 let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
-let g:nvim_tree_auto_close = 1 "0 by default, closes the tree when it's the last window
-let g:nvim_tree_auto_open = 1 "0 by default, opens the tree when typing `vim $DIR` or `vim`
-let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
-let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
+" let g:nvim_tree_gitignore = 1 "0 by default
 let g:nvim_tree_width = 25 "30 by default
 let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
