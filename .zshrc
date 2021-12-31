@@ -64,6 +64,8 @@ export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
 # export LS_COLORS="$(vivid generate one-dark)"
 source "/home/js/.config/zsh/load_lscolors.zsh"
 export STARSHIP_CONFIG="/home/js/.config/starship.toml"
+export OPTIX_ROOT_DIR="/opt/optix"
+export JULIA_NUM_THREADS=8
 
 
 # for fzf: use `fd` instead of `find`
@@ -106,12 +108,13 @@ alias g='git'
 alias gp='git push'
 alias gs="git status"
 alias ga='git add --all'
+alias gd='git diff'
 alias gcmsg='git commit -S -m'
 alias gfp='git fetch --all && git reset --hard origin/master'
 alias yr="cal -y"
 alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
 alias pid='while read c1 c2 c3; do echo $c2; done'
-alias mpv='mpv --sub-scale=0.4'
+alias mpv='mpv --sub-scale=0.35'
 alias feh='feh --conversion-timeout 1 --scale-down --auto-zoom'
 # alias l='ls -al --color=always'
 alias l='exa -al --git'
@@ -217,9 +220,11 @@ ch() {
   fzf --ansi --multi) 
 
   url=$(echo $op | sed 's#.*\(https*://\)#\1#')
-  xdg-open $url
+  xdg-open $url; zle reset-prompt; zle redisplay
 }
 
+zle -N ch
+bindkey '^h' ch
 
 # Lazy-loading nvm to speed up shell start time
 
