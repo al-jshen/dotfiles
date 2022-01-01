@@ -362,15 +362,15 @@ window:
     #   - (macOS) open
     #   - (Linux/BSD) xdg-open
     #   - (Windows) explorer
-    #launcher:
-    #  program: xdg-open
+    launcher:
+      program: xdg-open
     #  args: []
 
     # URL modifiers
     #
     # These are the modifiers that need to be held down for opening URLs when clicking
     # on them. The available modifiers are documented in the key binding section.
-    #modifiers: None
+    modifiers: None
 
     # Mouse bindings
     #
@@ -563,12 +563,12 @@ window:
 
 schemes:
 
-      # Nord (modified)
+  # Nord (modified)
   nord: &nord
       # Default colors
     primary:
       # background: '#23272e'
-      background: '#1D2023'
+      background: '#1D2021'
       foreground: '#D8DEE9'
 
       # Normal colors
@@ -613,34 +613,6 @@ schemes:
       magenta: '0xad8ee6'
       cyan:    '0x449dab'
       white:   '0x787c99'
-
-      # Bright colors
-    bright:
-      black:   '0x444b6a'
-      red:     '0xff7a93'
-      green:   '0xb9f27c'
-      yellow:  '0xff9e64'
-      blue:    '0x7da6ff'
-      magenta: '0xbb9af7'
-      cyan:    '0x0db9d7'
-      white:   '0xacb0d0'
-
-  tokyo-night-storm: &tokyo-night-storm
-    # Default colors
-    primary:
-      background: '0x24283b'
-      foreground: '0xa9b1d6'
-
-      # Normal colors
-    normal:
-      black:   '0x32344a'
-      red:     '0xf7768e'
-      green:   '0x9ece6a'
-      yellow:  '0xe0af68'
-      blue:    '0x7aa2f7'
-      magenta: '0xad8ee6'
-      cyan:    '0x449dab'
-      white:   '0x9699a8'
 
       # Bright colors
     bright:

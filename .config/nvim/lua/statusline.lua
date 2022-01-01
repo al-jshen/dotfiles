@@ -38,7 +38,7 @@ gls.left[4] = {
   FileName = {
     provider = {"FileName"},
     condition = condition.buffer_not_empty,
-    highlight = {colors.white, colors.lightbg},
+    highlight = {colors.accent1, colors.lightbg},
     separator = " ",
     separator_highlight = {colors.lightbg, colors.lightbg2}
   }
@@ -50,7 +50,7 @@ gls.left[5] = {
       local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
       return "  " .. dir_name .. " "
     end,
-    highlight = {colors.grey_fg2, colors.lightbg2},
+    highlight = {colors.accent2, colors.lightbg2},
     separator = " ",
     separator_highlight = {colors.lightbg2, colors.statusline_bg}
   }
@@ -127,7 +127,7 @@ gls.right[2] = {
       return " "
     end,
     condition = require("galaxyline.provider_vcs").check_git_workspace,
-    highlight = {colors.grey_fg2, colors.lightbg},
+    highlight = {colors.nord_blue, colors.lightbg},
     separator = "",
     separator_highlight = {colors.lightbg, colors.statusline_bg}
   }
@@ -137,7 +137,7 @@ gls.right[3] = {
   GitBranch = {
     provider = "GitBranch",
     condition = require("galaxyline.provider_vcs").check_git_workspace,
-    highlight = {colors.grey_fg2, colors.lightbg}
+    highlight = {colors.nord_blue, colors.lightbg}
   }
 }
 

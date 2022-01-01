@@ -15,6 +15,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
 Plug 'tpope/vim-fugitive'
+Plug 'sainnhe/everforest'
 
 Plug 'anufrievroman/vim-angry-reviewer'
 
@@ -73,7 +74,10 @@ nnoremap <leader>p :Git! push<CR>
 
 
 " " colors
-colorscheme flow
+set background=dark
+let g:everforest_background = 'hard'
+colorscheme everforest
+
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
 
@@ -174,7 +178,7 @@ set encoding=utf-8
 set bs=2
 
 " Faster update time
-set updatetime=100
+set updatetime=300
 
 nnoremap <silent> <C-n> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>

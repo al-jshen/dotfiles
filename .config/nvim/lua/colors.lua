@@ -27,7 +27,10 @@ local colors = {
   cyan = "#89ddff",
   statusline_bg = "#22262e",
   lightbg = "#2d3139",
-  lightbg2 = "#262a32"
+  lightbg2 = "#262a32",
+  accent1 = "#a7c080",
+  accent2 = "#d3c6aa",
+  accent3 = "#e67e80",
 }
 
 return colors
