@@ -41,6 +41,8 @@ zinit light zsh-users/zsh-completions
 zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
+fpath+=~/.zfunc
+
 # | highlighting | #
 zinit ice wait lucid atinit'zpcompinit; zpcdreplay'
 zinit light zdharma/fast-syntax-highlighting
@@ -59,7 +61,7 @@ export EDITOR='nvim'
 # export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
 export PYTHONPATH=/usr/bin/python3
-export PIPEWIRE_LATENCY=256/48000
+export PIPEWIRE_LATENCY=128/48000
 export CMDSTAN='/home/js/.cmdstan/cmdstan-2.27.0'
 # export LS_COLORS="$(vivid generate one-dark)"
 source "/home/js/.config/zsh/load_lscolors.zsh"
@@ -90,6 +92,10 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower
 # shift tab to go through completion menu backwards
 bindkey '^[[Z' reverse-menu-complete
 
+# ctrl + arrow keys to move forward/backward a word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 # no timeout when entering normal mode
 KEYTIMEOUT=0
 
@@ -109,7 +115,9 @@ alias gp='git push'
 alias gs="git status"
 alias ga='git add --all'
 alias gd='git diff'
+alias gl='git --no-pager log --decorate=short --pretty=oneline -n10'
 alias gcmsg='git commit -S -m'
+alias grao='git remote add origin'
 alias gfp='git fetch --all && git reset --hard origin/master'
 alias yr="cal -y"
 alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
@@ -134,16 +142,20 @@ alias clss='rm -f /home/js/screenshots/*'
 alias brightness='xrandr --output DP-0 --gamma 0.875 --brightness'
 alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
 alias rsnative='RUSTFLAGS="-C target-cpu=native"'
-alias kbcon="xmodmap /home/js/.Xmodmap && xset r rate 175 35"
+alias kbcon="setxkbmap us && xmodmap /home/js/.Xmodmap && xset r rate 175 35"
+alias kbwork="setxkbmap us && xmodmap /home/js/xmodmap.workman && xset r rate 175 35"
 alias xc='xclip -se c'
 alias xrg='xargs -d "\n"'
-alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git''
+alias rg='rg --hidden --no-ignore-vcs --follow --glob '!.git' -S'
 alias gc='gh repo clone'
 alias hf='hyperfine'
 alias ssh='TERM=xterm-256color ssh'
+alias docker-nv-cfg='--gpus all --device /dev/nvidia0 --device /dev/nvidia-uvm --device /dev/nvidia-uvm-tools --device /dev/nvidiactl'
+alias colsum='paste -s -d + - |bc'
+alias nvreset='sudo rmmod nvidia_uvm && sudo modprobe nvidia'
 
 # vulkan sdk
-source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
+# source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
 
 # completions
 source "/home/js/.config/gh/completions.zsh"
@@ -248,3 +260,5 @@ source <(/usr/local/bin/starship init zsh --print-full-init)
 # cd ~
 
 # zprof
+
+export PATH="$HOME/.poetry/bin:$PATH"
