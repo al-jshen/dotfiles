@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged/')
-" General
 
+" General
 Plug 'github/copilot.vim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'godlygeek/tabular'
@@ -9,13 +9,13 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
-" Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
 Plug 'tpope/vim-fugitive'
 Plug 'sainnhe/everforest'
+Plug 'psliwka/vim-smoothie'
 
 Plug 'anufrievroman/vim-angry-reviewer'
 
@@ -118,7 +118,6 @@ set mouse=a
 " coc.nvim node path
 let g:coc_node_path = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
 " neovim nodejs path
-
 
 " vim-slime target
 " let g:slime_target = "x11"
@@ -239,6 +238,10 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 " Use <TAB> for selections ranges.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" copilot remap
+inoremap <silent> <C-j> <Cmd>call copilot#Previous()<CR>
+inoremap <silent> <C-k> <Cmd>call copilot#Next()<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
