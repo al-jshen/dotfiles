@@ -56,7 +56,7 @@ setopt rm_star_silent # dont ask to confirm rm
 
 # | exports | #
 # export TERM='xterm-256color'
-export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin:/usr/bin:/home/js/.cargo/bin
+export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin:/usr/bin:/home/js/.cargo/bin:/home/js/bin
 export EDITOR='nvim'
 # export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
@@ -95,11 +95,15 @@ bindkey '^[[Z' reverse-menu-complete
 # ctrl + arrow keys to move forward/backward a word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
+bindkey '^H' backward-kill-word
 
 # no timeout when entering normal mode
 KEYTIMEOUT=0
 
 # export RUSTC_WRAPPER=sccache
+
+# expand aliases with tab
+zstyle ':completion:*' completer _expand_alias _complete _ignored
 
 
 # | aliases | #
@@ -114,13 +118,13 @@ alias g='git'
 alias gp='git push'
 alias gs="git status"
 alias ga='git add --all'
-alias gd='git diff'
+alias gd='git df'
 alias gl='git --no-pager log --decorate=short --pretty=oneline -n10'
 alias gcmsg='git commit -S -m'
 alias grao='git remote add origin'
 alias gfp='git fetch --all && git reset --hard origin/master'
 alias yr="cal -y"
-alias extip='curl ipinfo.io/city; curl ipinfo.io/country; curl ipinfo.io/ip'
+alias extip='curl ipinfo.io/ip'
 alias pid='while read c1 c2 c3; do echo $c2; done'
 alias mpv='mpv --sub-scale=0.35'
 alias feh='feh --conversion-timeout 1 --scale-down --auto-zoom'
@@ -153,6 +157,8 @@ alias ssh='TERM=xterm-256color ssh'
 alias docker-nv-cfg='--gpus all --device /dev/nvidia0 --device /dev/nvidia-uvm --device /dev/nvidia-uvm-tools --device /dev/nvidiactl'
 alias colsum='paste -s -d + - |bc'
 alias nvreset='sudo rmmod nvidia_uvm && sudo modprobe nvidia'
+alias carta='carta --host localhost'
+alias wz='docker run --rm -it wordz'
 
 # vulkan sdk
 # source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
@@ -162,6 +168,8 @@ source "/home/js/.config/gh/completions.zsh"
 source "/usr/share/fzf/key-bindings.zsh"
 source "/usr/share/fzf/completion.zsh"
 
+# load starship prompt
+source <(/usr/local/bin/starship init zsh --print-full-init)
 
 # | prompt | #
 # fpath+=('/home/js/.nvm/versions/node/v13.12.0/lib/node_modules/pure-prompt/functions')
@@ -235,6 +243,10 @@ ch() {
   xdg-open $url; zle reset-prompt; zle redisplay
 }
 
+calc() {
+  python3 -c "print($*)"
+}
+
 zle -N ch
 bindkey '^h' ch
 
@@ -255,10 +267,7 @@ for cmd in "${NODE_GLOBALS[@]}"; do
   eval "${cmd}(){ unset -f ${cmd} >/dev/null 2>&1; load_nvm; ${cmd} \$@; }"
 done
 
-source <(/usr/local/bin/starship init zsh --print-full-init)
-
 # cd ~
 
 # zprof
 
-export PATH="$HOME/.poetry/bin:$PATH"

@@ -13,11 +13,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
-Plug 'tpope/vim-fugitive'
 Plug 'sainnhe/everforest'
 Plug 'psliwka/vim-smoothie'
-
-Plug 'anufrievroman/vim-angry-reviewer'
+Plug 'tpope/vim-repeat'
+Plug 'ggandor/lightspeed.nvim'
 
 " Languages
 Plug 'lervag/vimtex'
@@ -75,8 +74,9 @@ nnoremap <leader>p :Git! push<CR>
 
 " " colors
 set background=dark
-let g:everforest_background = 'hard'
-colorscheme everforest
+" let g:everforest_background = 'hard'
+" colorscheme everforest
+colorscheme flow
 
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
@@ -202,8 +202,8 @@ let g:completion_trigger_on_delete = 0
 " Better message display
 set cmdheight=2
 
-" Less delay when pressing o
-set timeoutlen=300
+" Less delay
+set timeout timeoutlen=200 ttimeoutlen=50
 
 " Undo history
 set undodir=~/.vimdid
