@@ -390,12 +390,12 @@ type = custom/script
 interval = 1
 ; exec = if amixer get Master | tail -n1 | awk '{print $6}' | cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo vol: $(amixer get Master | tail -n1 | awk '{print $4}' | cut -d '[' -f2 | cut -d ']' -f1); else echo "%{F#666}muted%{F-}"; fi
 ; exec = if pactl list sinks |rg RUNNING -A20 |rg Mute |rg -q no; then echo vol: $(pactl list sinks |rg RUNNING -A20 |rg "^\s+Volume" |cut -f6 -d " "); else echo "%{F#666}muted%{F-}"; fi
-exec = if pactl get-default-sink |rg -q "bluez_output"; then echo  $(pactl get-sink-volume @DEFAULT_SINK@ |cut -d' ' -f6) %{F#4C6EF5}%{F-}; elif pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo " $(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%"; else echo "%{F#162021}muted%{F-}"; fi;
+exec = if pactl get-default-sink |rg -q "bluez_output"; then echo "%{F#4C6EF5}%{T4} %{F- T-}%{F#162021}$(pactl get-sink-volume @DEFAULT_SINK@ |cut -d' ' -f6)%{F-}"; elif pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo "%{T4} %{T-}$(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%"; else echo "%{F#162021}muted%{F-}"; fi;
 format-background = ${colors.frost3}
 format-foreground = ${colors.background}
 format = <label>
-format-prefix = " "
-format-prefix-font = 3
+; format-prefix = " "
+; format-prefix-font = 3
 label = %output%
 
 [module/mic_toggle]
