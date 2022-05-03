@@ -76,10 +76,10 @@ padding-right = 1
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Source Code Pro Medium:style=Regular:size=18;4
+font-0 = "MesloLGS:style=Regular:size=18;4"
 font-1 = "Iosevka Nerd Font:size=12;3"
 font-2 = "Iosevka Nerd Font:size=16;3"
-font-3 = "Iosevka Nerd Font:size=20;3"
+font-3 = "Iosevka Nerd Font:size=19;4"
 font-4 = FontAwesome5Free:style=Regular:size=20;4
 font-5 = FontAwesome5Free:style=Solid:size=16;4
 font-6 = FontAwesome5Brands:style=Regular:size=16;4
@@ -241,11 +241,11 @@ label-focused = %index%
 label-focused-foreground = ${colors.frost2}
 label-focused-underline = ${colors.frost2}
 ; label-focused-underline= ${colors.frost4}
-label-focused-padding = 1
+label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 1
+label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %  dex%
@@ -278,8 +278,9 @@ click-right = playerctl next
 [module/usage_cpu]
 type = internal/cpu
 interval = 2
-; format-prefix = "  "
-; format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-font = 3
+format-prefix = " "
+; format-prefix-foreground = ${colors.background}
 format-background = ${colors.aurora1}
 format-foreground = ${colors.background}
 label = "%percentage%% %{A}"
@@ -287,7 +288,8 @@ label = "%percentage%% %{A}"
 [module/usage_memory]
 type = internal/memory
 interval = 2
-; format-prefix = "  "
+format-prefix = " "
+format-prefix-font = 3
 ; format-prefix-foreground = ${colors.foreground-alt}
 ; format-background = ${colors.foreground-alt}
 format-background = ${colors.aurora3}
@@ -301,6 +303,8 @@ interval = 2
 exec = used=$(nvidia-smi --query-gpu="memory.used" --format=noheader,csv,nounits) && total=$(nvidia-smi --query-gpu="memory.total" --format=noheader,csv,nounits) && echo "scale=2; $used / $total * 100" |bc |cut -d "." -f 1
 format-background = ${colors.aurora4}
 format-foreground = ${colors.background}
+format-prefix = " "
+format-prefix-font = 3
 label = "%output%% %{A}"
 
 [module/wlan]
@@ -309,7 +313,8 @@ interface = enp34s0
 interval = 3
 accumulate-stats = true
 
-; format-connected-prefix = "  "
+format-connected-prefix = "  "
+format-connected-prefix-font = 3
 format-connected = <label-connected>
 format-connected-background = ${colors.aurora5}
 format-connected-foreground = ${colors.background}
@@ -333,11 +338,11 @@ type = internal/date
 interval = 5
 
 date = "%A %b %d %Y"
-
 time = "%l:%M %p"
 
 ; format-prefix = "   "
-format-suffix = ""
+format-prefix = "  "
+format-prefix-font = 3
 
 format-background = ${colors.frost3}
 format-foreground = ${colors.background}
@@ -385,10 +390,12 @@ type = custom/script
 interval = 1
 ; exec = if amixer get Master | tail -n1 | awk '{print $6}' | cut -d '[' -f2 |cut -d ']' -f1 | grep -q 'on'; then echo vol: $(amixer get Master | tail -n1 | awk '{print $4}' | cut -d '[' -f2 | cut -d ']' -f1); else echo "%{F#666}muted%{F-}"; fi
 ; exec = if pactl list sinks |rg RUNNING -A20 |rg Mute |rg -q no; then echo vol: $(pactl list sinks |rg RUNNING -A20 |rg "^\s+Volume" |cut -f6 -d " "); else echo "%{F#666}muted%{F-}"; fi
-exec = if pactl get-default-sink |rg -q "bluez_output"; then echo  $(pactl get-sink-volume @DEFAULT_SINK@ |cut -d' ' -f6) %{F#4C6EF5}%{F-}; elif pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo "$(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%"; else echo "%{F#162021}muted%{F-}"; fi;
+exec = if pactl get-default-sink |rg -q "bluez_output"; then echo  $(pactl get-sink-volume @DEFAULT_SINK@ |cut -d' ' -f6) %{F#4C6EF5}%{F-}; elif pactl list sinks |rg "Description: Starship" -A5 |rg Mute |rg -q no; then echo " $(pamixer --sink alsa_output.pci-0000_28_00.4.analog-stereo --get-volume)%"; else echo "%{F#162021}muted%{F-}"; fi;
 format-background = ${colors.frost3}
 format-foreground = ${colors.background}
 format = <label>
+format-prefix = " "
+format-prefix-font = 3
 label = %output%
 
 [module/mic_toggle]
@@ -399,6 +406,7 @@ type = custom/script
 exec = if pactl list sources |rg -q jack_in; then if pactl list sources |rg jack_in -A20 |rg -q "Mute: no"; then echo "%{B#2e3440}%{u#5e81ac}%{+u}mic on%{-u B-}"; else echo "%{F#666}mic off%{F-}"; fi; elif pactl list sources |rg alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-stereo -A20 |rg -q "Mute: no"; then echo "%{F#BF616A} %{F-}"; else echo " "; fi
 interval = 1
 
+label-font = 3
 format-background = ${colors.frost3}
 format-foreground = ${colors.background}
 format = <label>
