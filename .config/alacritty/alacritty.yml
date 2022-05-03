@@ -561,7 +561,40 @@ window:
 
 
 
+
+
 schemes:
+
+
+  deep: &deep
+    # Default colors
+    primary:
+      # background: '#181819'
+      background: '#1d2021'
+      # foreground: '#d6e0eb'
+      foreground: '#ebe5d8'
+
+    # Normal colors
+    normal:
+      black:   '#2f3033'
+      red:     '#b73a40'
+      green:   '#7cb074'
+      yellow:  '#e3bd6b'
+      blue:    '#325fa3'
+      magenta: '#A28DBE'
+      cyan:    '#4b7cad'
+      white:   '#707880'
+
+    # Bright colors
+    bright:
+      black:   '#a7baaf'
+      red:     '#bf4957'
+      green:   '#a59348'
+      yellow:  '#d47026'
+      blue:    '#4d8db7'
+      magenta: '#C09EBD'
+      cyan:    '#5d8257'
+      white:   '#ECEFF4'
 
   # Nord (modified)
   nord: &nord
@@ -681,4 +714,4 @@ schemes:
       cyan:    '0xa3f7ff'
       white:   '0xffffff'
 
-colors: *nord
+colors: *deep
