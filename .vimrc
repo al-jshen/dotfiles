@@ -10,13 +10,15 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
 Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf.vim'
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
 Plug 'sainnhe/everforest'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-repeat'
 Plug 'ggandor/lightspeed.nvim'
+Plug 'gko/vim-coloresque'
+
 
 " Languages
 Plug 'lervag/vimtex'
@@ -71,12 +73,17 @@ nnoremap <leader>ga :Git add .<CR>
 nnoremap <leader>m :Git commit<CR>
 nnoremap <leader>p :Git! push<CR>
 
+" fzf-lua shortcuts
+nnoremap <c-F> <cmd>lua require('fzf-lua').files()<CR>
+nnoremap <c-G> <cmd>lua require('fzf-lua').grep()<CR><CR>
+
+nnoremap <c-W> <cmd>bd<CR>
 
 " " colors
 set background=dark
 " let g:everforest_background = 'hard'
 " colorscheme everforest
-colorscheme flow
+colorscheme deep
 
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
@@ -199,8 +206,8 @@ let g:completion_timer_cycle = 50
 let g:completion_matching_ignore_case = 1
 let g:completion_trigger_on_delete = 0
 
-" Better message display
-set cmdheight=2
+" bottom message display height
+set cmdheight=1
 
 " Less delay
 set timeout timeoutlen=200 ttimeoutlen=50
