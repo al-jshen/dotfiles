@@ -266,6 +266,8 @@ label-urgent-padding = 2
 type = custom/script
 exec = (sleep 0.5; pactl move-source-output $(pactl list source-outputs |rg 'node.name.*songrec' -B30 |rg 'Source Output #' |rg '\d+' -o) easyeffects_sink.monitor) & songrec listen -d pipewire
 tail = true
+format-prefix = "  "
+label = %output%
 
 [module/xwindow]
 type = internal/xwindow
