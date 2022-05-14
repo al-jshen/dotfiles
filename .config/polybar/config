@@ -45,7 +45,7 @@ aurora5 = #b48ead
 
 [bar/all]
 ;monitor = ${env:MONITOR:HDMI-1}
-width = 87%
+width = 85%
 ;width = 82%
 height = 31
 ;height = 2.5%
@@ -85,15 +85,15 @@ font-5 = FontAwesome5Free:style=Solid:size=16;4
 font-6 = FontAwesome5Brands:style=Regular:size=16;4
 font-7 = FontAwesome:style=Regular:size=16;4
 
-modules-left = i3
+modules-left = i3 sep playing 
 modules-center =
 modules-right = BLD mic_toggle sound BRD sep YLD usage_memory YRD sep RLD usage_cpu temperature_cpu RRD sep GLD usage_gpu temperature_gpu GRD sep PLD wlan PRD sep BLD date BRD
 tray-position = right
 tray-detached = true
 tray-padding = 6
 tray-scale = 2
-tray-offset-x = 5%
-tray-offset-y = -13
+tray-offset-x = 8%
+tray-offset-y = -17
 ; tray-background = ${colors.night1}
 
 ;wm-restack = bspwm
@@ -261,6 +261,11 @@ label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
+
+[module/playing]
+type = custom/script
+exec = (sleep 0.5; pactl move-source-output $(pactl list source-outputs |rg 'node.name.*songrec' -B30 |rg 'Source Output #' |rg '\d+' -o) easyeffects_sink.monitor) & songrec listen -d pipewire
+tail = true
 
 [module/xwindow]
 type = internal/xwindow
