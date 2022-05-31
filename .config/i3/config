@@ -223,14 +223,14 @@ bindsym Mod1+r mode "resize"
 #bindsym XF86AudioNext exec "playerctl next"
 
 # gaps
-gaps inner 20
+gaps inner 20 
 gaps horizontal 10
-gaps bottom 20
+gaps bottom 20 
 gaps top 50
 # gaps top 34
 
 # script to toggle gaps and borders
-# bindsym Mod1+Shift+g exec /home/js/.config/i3/toggle_gaps.sh
+bindsym Mod1+Shift+g exec /home/js/.config/i3/toggle_gaps.sh
 
 # toggle compositor
 bindsym Mod1+Shift+p exec /home/js/.config/i3/toggle_compositor.sh
@@ -291,6 +291,7 @@ exec xmodmap ~/.Xmodmap
 #exec picom --config /home/js/.config/picom/config -b
 exec udiskie -a -n -t &
 # exec xrandr --output DP-0 --gamma 0.875 --brightness 0.9
+exec xrandr --output HDMI-0 --mode 2560x1440 --panning 3840x2160 --scale 1.5x1.5
 exec systemctl --user start redshift-gtk.service
 exec find /home/js/screenshots/ -name "*" -type f -mtime +2 -delete;
 exec restart
