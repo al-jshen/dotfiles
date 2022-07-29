@@ -12,31 +12,21 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE=~/.zsh_history
 
-# ### Added by Zinit's installer
-# if [[ ! -f /home/js/.zinit/bin/zinit.zsh ]]; then
-#   print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-#   command mkdir -p "/home/js/.zinit" && command chmod g-rwX "/home/js/.zinit"
-#   command git clone https://github.com/zdharma/zinit "/home/js/.zinit/bin" && \
-#     print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-#     print -P "%F{160}▓▒░ The clone has failed.%f%b"
-# fi
-
 source "/home/js/.zinit/bin/zinit.zsh"
-# autoload -Uz _zinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 # zinit light-mode for \
-#   zinit-zsh/z-a-patch-dl \
-#   zinit-zsh/z-a-as-monitor \
-#   zinit-zsh/z-a-bin-gem-node
+#   zdharma-continuum/zinit-annex-{'readurl','bin-gem-node','patch-dl','rust'}
 
 ### End of Zinit's installer chunk
 
 # zinit stuff
-zinit ice blockf wait lucid
+zinit ice wait blockf lucid
 zinit light zsh-users/zsh-completions
+
+zinit ice wait lucid
+zinit light chitoku-k/fzf-zsh-completions
 
 zinit ice wait lucid atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
@@ -45,7 +35,10 @@ fpath+=~/.zfunc
 
 # | highlighting | #
 zinit ice wait lucid atinit'zpcompinit; zpcdreplay'
-zinit light zdharma/fast-syntax-highlighting
+zinit light z-shell/F-Sy-H
+
+zinit ice wait lucid
+zinit light mafredri/zsh-async
 
 setopt autocd # cd without typing cd
 setopt rm_star_silent # dont ask to confirm rm
@@ -56,7 +49,7 @@ setopt rm_star_silent # dont ask to confirm rm
 
 # | exports | #
 # export TERM='xterm-256color'
-export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin:/usr/bin:/home/js/.cargo/bin:/home/js/bin
+export PATH=/usr/local/bin:/home/js/.local/bin:/opt/cuda/bin:/home/js/.cargo/bin:/usr/bin:/home/js/.cargo/bin:/home/js/bin:/home/js/.ghcup/bin
 export EDITOR='nvim'
 # export LD_LIBRARY_PATH=$(rustc --print sysroot)/lib:$LD_LIBRARY_PATH
 export JUPYTERHUB_SINGLEUSER_APP='jupyter_server.serverapp.ServerApp'
@@ -68,6 +61,8 @@ source "/home/js/.config/zsh/load_lscolors.zsh"
 export STARSHIP_CONFIG="/home/js/.config/starship.toml"
 export OPTIX_ROOT_DIR="/opt/optix"
 export JULIA_NUM_THREADS=8
+export YTUI_MUSIC_DIR='/st/ytui/music/'
+export YTUI_CONFIG_DIR='/st/ytui/config/'
 
 
 # for fzf: use `fd` instead of `find`
@@ -120,7 +115,8 @@ alias gs="git status"
 alias ga='git add --all'
 alias gd='git df'
 alias gl='git --no-pager log --decorate=short --pretty=oneline -n10'
-alias gcmsg='git commit -S -m'
+alias gcam='git commit -S -am'
+alias gcm='git commit -S -m'
 alias grao='git remote add origin'
 alias gfp='git fetch --all && git reset --hard origin/master'
 alias yr="cal -y"
@@ -129,7 +125,7 @@ alias pid='while read c1 c2 c3; do echo $c2; done'
 alias mpv='mpv --sub-scale=0.35'
 alias feh='feh --conversion-timeout 1 --scale-down --auto-zoom'
 # alias l='ls -al --color=always'
-alias l='exa -al --git'
+alias l='exa -alg --git'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias md='mkdir'
@@ -159,6 +155,8 @@ alias colsum='paste -s -d + - |bc'
 alias nvreset='sudo rmmod nvidia_uvm && sudo modprobe nvidia'
 alias carta='carta --host localhost'
 alias wz='docker run --rm -it wordz'
+alias gca='git commit --amend'
+alias puvpn='gp-saml-gui -S --portal vpn.princeton.edu -- --authgroup="US Northeast"'
 
 # vulkan sdk
 # source "/home/js/builds/vulkansdk/1.2.162.1/setup-env.sh"
@@ -188,7 +186,7 @@ pdfcomp() {
 }
 
 vcomp() {
-  ffmpeg -i $1 -vcodec libx264 -crf 20 $2
+  ffmpeg -i $1 -vcodec libx264 -crf 28 $2
 }
 
 vconv() {
@@ -225,6 +223,10 @@ lt() {
   else
     exa -al --git -T
   fi
+}
+
+embed() {
+  ffmpeg -r 1 -loop 1 -y -i $1 -i $2 -c:a copy -r 1 -vcodec libx264 -shortest -strict -2 $3
 }
 
 ch() {
@@ -270,4 +272,5 @@ done
 # cd ~
 
 # zprof
+
 

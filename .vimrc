@@ -21,7 +21,6 @@ Plug 'gko/vim-coloresque'
 
 
 " Languages
-Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 Plug 'arzg/vim-rust-syntax-ext'
 Plug 'eigenfoo/stan-vim'
@@ -77,8 +76,6 @@ nnoremap <leader>p :Git! push<CR>
 nnoremap <c-F> <cmd>lua require('fzf-lua').files()<CR>
 nnoremap <c-G> <cmd>lua require('fzf-lua').grep()<CR><CR>
 
-nnoremap <c-W> <cmd>bd<CR>
-
 " " colors
 set background=dark
 " let g:everforest_background = 'hard'
@@ -125,6 +122,9 @@ set mouse=a
 " coc.nvim node path
 let g:coc_node_path = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
 " neovim nodejs path
+let g:node_host_prog = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
+" copilot nodejs path
+let g:copilot_node_command = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
 
 " vim-slime target
 " let g:slime_target = "x11"
@@ -190,13 +190,9 @@ nnoremap <silent> <C-n> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
 nnoremap <leader>n :NvimTreeFindFile<CR>
 
-let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
 " let g:nvim_tree_gitignore = 1 "0 by default
 let g:nvim_tree_width = 25 "30 by default
-let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 let g:nvim_tree_width_allow_resize  = 1 "0 by default, will not resize the tree when opening a file
-let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
 
 set completeopt=menuone,longest,noinsert
 set completeopt-=preview
