@@ -38,10 +38,10 @@ function! s:SetHighlight(group, fg, bg, attr)
 endfun
 
 
-let s:bg = { 'gui': 'none', 'cterm': 'none' }
+let s:bg = { 'gui': '#1D2023', 'cterm': 234 }
 let s:fg = { 'gui': '#D8DEE9', 'cterm': 146 }
-let s:invisibles = { 'gui': '#4e5579', 'cterm': 60 }
-let s:comments = { 'gui': '#676e95', 'cterm': 60 }
+let s:invisibles = { 'gui': '#4e5785', 'cterm': 60 }
+let s:comments = { 'gui': '#81858c', 'cterm': 60 }
 let s:selection = { 'gui': '#343b51', 'cterm': 60 }
 let s:guides = { 'gui': '#4e5579', 'cterm': 60 }
 let s:caret = { 'gui': '#ffcc00', 'cterm': 220 }
@@ -52,14 +52,15 @@ let s:black = { 'gui': '#000000', 'cterm': 232 }
 let s:red = { 'gui': '#ff5370', 'cterm': 203 }
 let s:orange = { 'gui': '#f78c6c', 'cterm': 209 }
 let s:yellow = { 'gui': '#EBCB8B', 'cterm': 11 }
-let s:green = { 'gui': '#A3BE8C', 'cterm': 2 }
+let s:green = { 'gui': '#96cf86', 'cterm': 2 }
 let s:cyan = { 'gui': '#89ddff', 'cterm': 117 }
 let s:blue = { 'gui': '#82aaff', 'cterm': 111 }
 let s:paleblue = { 'gui': '#81A1C1', 'cterm': 152 }
-let s:purple = { 'gui': '#c792ea', 'cterm': 176 }
+let s:purple = { 'gui': '#b97be3', 'cterm': 176 }
 let s:brown = { 'gui': '#c17e70', 'cterm': 137 }
 let s:pink = { 'gui': '#f07178', 'cterm': 204 }
-let s:violet = { 'gui': '#B48EAD', 'cterm': 139 }
+let s:violet = { 'gui': '#cf9bc5', 'cterm': 139 }
+let s:neon = { 'gui': '#39FF14', 'cterm': 10 }
 
 let g:material_colorscheme_map = {}
 let g:material_colorscheme_map.bg = s:bg
@@ -150,7 +151,7 @@ call s:SetHighlight('Structure', s:cyan, '', '')
 call s:SetHighlight('Special', s:violet, '', '')
 call s:SetHighlight('Underlined', s:blue, '', '')
 call s:SetHighlight('Error', s:bg, s:red, '')
-call s:SetHighlight('Todo', s:orange, s:bg, 'italic')
+call s:SetHighlight('Todo', s:red, s:neon, 'bold')
 
 " Legacy groups for official git.vim and diff.vim syntax
 hi! link diffFile DiffAdd
@@ -376,11 +377,11 @@ call s:SetHighlight('mkdLink', s:green, '', '')
 call s:SetHighlight('mkdListItem', s:cyan, '', '')
 call s:SetHighlight('mkdURL', s:pink, '', 'underline')
 
-" vim-gitgutter
-call s:SetHighlight('GitGutterAdd', s:green, '', '')
-call s:SetHighlight('GitGutterChange', s:yellow, '', '')
-call s:SetHighlight('GitGutterChangeDelete', s:orange, '', '')
-call s:SetHighlight('GitGutterDelete', s:red, '', '')
+" vim-gitgutter and statusline git diff
+call s:SetHighlight('DiffAdd', s:green, '', '')
+call s:SetHighlight('DiffChange', s:yellow, '', '')
+call s:SetHighlight('DiffChangeDelete', s:orange, '', '')
+call s:SetHighlight('DiffDelete', s:red, '', '')
 
 " " vim-signify
 " hi link SignifySignAdd GitGutterAdd

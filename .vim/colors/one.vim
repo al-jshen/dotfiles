@@ -359,7 +359,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " }}}
 
   " Vim editor color --------------------------------------------------------{{{
-  call <sid>X('Normal',       s:syntax_fg,     s:syntax_bg,      '')
+  call <sid>X('Normal',       s:syntax_fg,     '',               '')
   call <sid>X('bold',         '',              '',               'bold')
   call <sid>X('ColorColumn',  '',              s:syntax_cursor,  '')
   call <sid>X('Conceal',      s:mono_4,        s:syntax_bg,      '')
@@ -399,7 +399,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('WarningMsg',   s:hue_5,         '',               '')
   call <sid>X('TooLong',      s:hue_5,         '',               '')
   call <sid>X('WildMenu',     s:syntax_fg,     s:mono_3,         '')
-  call <sid>X('SignColumn',   '',              s:syntax_bg,      '')
+  call <sid>X('SignColumn',   s:syntax_fg,     s:syntax_bg,      '')
   call <sid>X('Special',      s:hue_2,         '',               '')
   " }}}
 
@@ -900,6 +900,11 @@ endif
 " vim: set fdl=0 fdm=marker:
 
 
-  " LSP highlighting ------------------------------ {{{
-  call <sid>X('LspDiagnosticsError', s:hue_5, '', '')
-  call <sid>X('LspDiagnosticsWarning', s:hue_6, '', '')
+  " LSP diagnostics virtual text highlighting ------------------------------ {{{
+  call <sid>X('LspDiagnosticsError',   s:hue_5,   '', '')
+  call <sid>X('LspDiagnosticsWarning', s:hue_6,   '', '')
+  call <sid>X('CocErrorVirtualText',   s:hue_5,   '', '')
+  call <sid>X('CocWarningVirtualText', s:hue_6,   '', '')
+  call <sid>X('CocInfoVirtualText',    s:frost_1, '', '')
+  call <sid>X('CocHintVirtualText',    s:frost_2, '', '')
+  call <sid>X('CocHintSign',           s:frost_1, '', '') " coc inlay chaining hints
