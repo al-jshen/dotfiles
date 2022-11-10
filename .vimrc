@@ -13,64 +13,26 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
-Plug 'sainnhe/everforest'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-repeat'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'gko/vim-coloresque'
 
-
 " Languages
 Plug 'rust-lang/rust.vim'
+Plug 'lervag/vimtex'
 Plug 'arzg/vim-rust-syntax-ext'
 Plug 'eigenfoo/stan-vim'
-" Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'Chiel92/vim-autoformat'
-Plug 'tikhomirov/vim-glsl'
-Plug 'JuliaEditorSupport/julia-vim'
-
-
-" Syntax/Highlighting
-" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
 " Completion
-Plug 'neoclide/coc.nvim'
-" Plug 'SirVer/ultisnips'
-" Plug 'epilande/vim-react-snippets'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
 " set <leader> to space
 let mapleader = "\<Space>"
 
-" Silicon
-let g:silicon = {
-      \   'theme':              'Dracula',
-      \   'font':                  'Hack',
-      \   'background':         '#AAAAFF',
-      \   'shadow-color':       '#555555',
-      \   'line-pad':                   2,
-      \   'pad-horiz':                 80,
-      \   'pad-vert':                 100,
-      \   'shadow-blur-radius':         0,
-      \   'shadow-offset-x':            0,
-      \   'shadow-offset-y':            0,
-      \   'line-number':           v:true,
-      \   'round-corner':          v:true,
-      \   'window-controls':       v:true,
-      \ }
-let g:silicon['output'] = '/home/js/screenshots/{time:%Y-%m-%d.%H-%M-%S.png}'
-xnoremap <leader>s :'<,'>Silicon<CR>
-
-" angry reviewer
-let g:AngryReviewerEnglish = 'american'
-nnoremap <leader>ar :AngryReviewer<cr>
-
-" fugitive shortcuts
-nnoremap <leader>ga :Git add .<CR>
-nnoremap <leader>m :Git commit<CR>
-nnoremap <leader>p :Git! push<CR>
 
 " fzf-lua shortcuts
 nnoremap <c-F> <cmd>lua require('fzf-lua').files()<CR>
@@ -101,6 +63,7 @@ nnoremap : ;
 xnoremap ; :
 xnoremap : ;
 
+
 " quick-save, don't format
 nnoremap <leader>W :noa w<CR>
 " quick save, format
@@ -117,31 +80,14 @@ let g:gitgutter_grep=''
 let g:gitgutter_log=1
 
 set mouse=a
-" set statusline^=%{coc#status()}
+
 
 " coc.nvim node path
-let g:coc_node_path = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
+let g:coc_node_path = "~/.nvm/versions/node/v16.16.0/bin/node"
 " neovim nodejs path
-let g:node_host_prog = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
+let g:node_host_prog = "~/.nvm/versions/node/v16.16.0/bin/node"
 " copilot nodejs path
-let g:copilot_node_command = '/home/js/.nvm/versions/node/v16.4.2/bin/node'
-
-" vim-slime target
-" let g:slime_target = "x11"
-" let g:slime_default_config = {"socket_name": get(split($TMUX, ","), 0), "target_pane": ":.1"}
-" let g:slime_python_qtconsole = 1
-
-" Buffer configurations
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#buffer_nr_show = 1
-
-" Airline theme
-" let g:airline_theme='base16'
-
-" Lightline theme
-" let g:lightline = {
-"       \ 'colorscheme': 'one',
-"       \ }
+let g:copilot_node_command = "~/.nvm/versions/node/v16.16.0/bin/node"
 
 " Window splitting
 set splitbelow
@@ -174,8 +120,11 @@ let g:python3_host_prog = '/usr/bin/python'
 
 " Latex stuff
 let g:tex_flavor = 'latex'
-" let g:vimtex_view_method = 'zathura'
-
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_quickfix_mode=0
+let g:vimtex_view_method = 'skim' " Choose which program to use to view PDF file 
+let g:vimtex_view_skim_sync = 1 " Value 1 allows forward search after every successful compilation
+let g:vimtex_view_skim_activate = 0 " Value 1 allows change focus to skim after command `:VimtexView` is given
 
 " UTF-8 Support
 set encoding=utf-8
@@ -219,32 +168,33 @@ let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_insert_delay = 1
 let g:diagnostic_enable_underline = 1
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
 " Navigating completion list
 " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <silent><expr> <S-TAB>
-      \ pumvisible() ? "\<C-p>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" copilot remap
+inoremap <C-j> <Plug>(copilot-next)
+inoremap <C-k> <Plug>(copilot-previous)
+inoremap <C-l> <Plug>(copilot-suggest)
 
 " Use <TAB> for selections ranges.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" copilot remap
-inoremap <silent> <C-j> <Cmd>call copilot#Previous()<CR>
-inoremap <silent> <C-k> <Cmd>call copilot#Next()<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -257,12 +207,8 @@ function! s:show_documentation()
   endif
 endfunction
 
-
-" Implement methods for traits
-nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
-
 " Show actions available at this location
-nnoremap <silent> <space>a  :CocAction<cr>
+nnoremap <silent> <leader>a <Plug>(coc-codeaction-cursor)
 
 " have a column for symbols (eg for errors)
 set signcolumn=yes
@@ -325,7 +271,4 @@ set nrformats+=alpha
 
 " Crontab vim fix
 autocmd FileType crontab setlocal nobackup nowritebackup
-
-" Theming
-" let alt_colorscheme_types = ['.tex']
 
