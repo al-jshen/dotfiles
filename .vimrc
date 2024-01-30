@@ -18,8 +18,7 @@ Plug 'tpope/vim-repeat'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'gko/vim-coloresque'
 Plug 'sainnhe/everforest'
-Plug 'kevinhwang91/promise-async'
-Plug 'kevinhwang91/nvim-ufo'
+Plug 'tpope/vim-fugitive'
 
 " Languages
 Plug 'rust-lang/rust.vim'
