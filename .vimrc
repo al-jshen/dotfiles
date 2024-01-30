@@ -17,6 +17,9 @@ Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-repeat'
 Plug 'ggandor/lightspeed.nvim'
 Plug 'gko/vim-coloresque'
+Plug 'sainnhe/everforest'
+Plug 'kevinhwang91/promise-async'
+Plug 'kevinhwang91/nvim-ufo'
 
 " Languages
 Plug 'rust-lang/rust.vim'
@@ -37,12 +40,13 @@ let mapleader = "\<Space>"
 " fzf-lua shortcuts
 nnoremap <c-F> <cmd>lua require('fzf-lua').files()<CR>
 nnoremap <c-G> <cmd>lua require('fzf-lua').grep()<CR><CR>
+set rtp+=/opt/homebrew/opt/fzf
 
 " " colors
 set background=dark
-" let g:everforest_background = 'hard'
-" colorscheme everforest
-colorscheme deep
+let g:everforest_background = 'hard'
+colorscheme everforest
+" colorscheme deep
 
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
@@ -63,6 +67,8 @@ nnoremap : ;
 xnoremap ; :
 xnoremap : ;
 
+" silicon
+vnoremap <leader>s :Silicon<CR>
 
 " quick-save, don't format
 nnoremap <leader>W :noa w<CR>
@@ -83,11 +89,13 @@ set mouse=a
 
 
 " coc.nvim node path
-let g:coc_node_path = "~/.nvm/versions/node/v16.16.0/bin/node"
+let g:coc_node_path = "/opt/homebrew/bin/node"
 " neovim nodejs path
-let g:node_host_prog = "~/.nvm/versions/node/v16.16.0/bin/node"
+let g:node_host_prog = "/opt/homebrew/bin/node"
 " copilot nodejs path
-let g:copilot_node_command = "~/.nvm/versions/node/v16.16.0/bin/node"
+let g:copilot_node_command = "/opt/homebrew/bin/node"
+
+
 
 " Window splitting
 set splitbelow
@@ -120,11 +128,24 @@ let g:python3_host_prog = '/usr/bin/python'
 
 " Latex stuff
 let g:tex_flavor = 'latex'
-let g:vimtex_view_method = 'zathura'
 let g:vimtex_quickfix_mode=0
 let g:vimtex_view_method = 'skim' " Choose which program to use to view PDF file 
 let g:vimtex_view_skim_sync = 1 " Value 1 allows forward search after every successful compilation
 let g:vimtex_view_skim_activate = 0 " Value 1 allows change focus to skim after command `:VimtexView` is given
+nnoremap <leader>v <plug>(vimtex-view)
+
+" focus on neovim after reverse search
+function! s:TexFocusVim() abort
+  silent execute "!open -a Alacritty"
+  redraw!
+endfunction
+
+augroup vimtex_event_focus
+  au!
+  au User VimtexEventViewReverse call s:TexFocusVim()
+augroup END
+
+
 
 " UTF-8 Support
 set encoding=utf-8
@@ -168,29 +189,55 @@ let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_insert_delay = 1
 let g:diagnostic_enable_underline = 1
 
-" Navigating completion list
-" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" " Navigating completion list
+" " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
 
-" Insert <tab> when previous text is space, refresh completion if not.
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" " Insert <tab> when previous text is space, refresh completion if not.
+" inoremap <silent><expr> <TAB>
+"       \ coc#pum#visible() ? coc#pum#next(1) :
+"       \ CheckBackspace() ? "\<Tab>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+" inoremap <expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" snippets 
+
+" Press Tab and Shift+Tab and navigate around completion selections
+function! s:check_back_space() abort
+  let col = col('.') -1
+  return !col || getline('.')[col - 1] =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+  \ coc#pum#visible() ? coc#pum#next(1) :
+  \ CheckBackspace() ? "\<Tab>" :
+  \ coc#refresh()
+inoremap <silent><expr> <S-Tab>
+  \ coc#pum#visible() ? coc#pum#prev(1) :
+  \ CheckBackspace() ? "\<S-Tab>" :
+  \ coc#refresh()
+
+" Press Enter to select completion items or expand snippets
+inoremap <silent><expr> <cr>
+  \ coc#pum#visible() ? coc#_select_confirm() :
+  \ "\<C-g>u\<CR>"
+
+let g:coc_snippet_next = '<Tab>'              " Use Tab to jump to next snippet placeholder
+let g:coc_snippet_prev = '<S-Tab>'            " Use Shift+Tab to jump to previous snippet placeholder
+
+
 " copilot remap
-inoremap <C-j> <Plug>(copilot-next)
-inoremap <C-k> <Plug>(copilot-previous)
-inoremap <C-l> <Plug>(copilot-suggest)
+inoremap <silent> <C-j> <Plug>(copilot-next)
+inoremap <silent> <C-k> <Plug>(copilot-previous)
+inoremap <silent> <C-l> <Plug>(copilot-suggest)
 
 " Use <TAB> for selections ranges.
 nmap <silent> <TAB> <Plug>(coc-range-select)
@@ -200,10 +247,15 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+  " if (index(['vim','help'], &filetype) >= 0)
+  "   execute 'h '.expand('<cword>')
+  " else
+  "   call CocAction('doHover')
+  " endif
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    call feedkeys('K', 'in')
   endif
 endfunction
 

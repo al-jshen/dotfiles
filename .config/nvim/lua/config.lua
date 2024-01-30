@@ -15,6 +15,7 @@ require('bufferline').setup({
   },
 })
 
+
 require('nvim-treesitter.configs').setup ({
   ensure_installed = {"bash", "bibtex", "c", "cmake", "comment", "cpp", "css", "cuda", "dockerfile", "go", "html", "javascript", "jsdoc", "json", "json5", "jsonc", "julia", "latex", "llvm", "lua", "make", "markdown", "ocaml", "perl", "python", "r", "regex", "rust", "scss", "todotxt", "toml", "tsx", "typescript", "vim", "yaml"}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = { enable = true },
@@ -29,6 +30,7 @@ require('nvim-treesitter.configs').setup ({
     },
   },
   textobjects = {enable = true},
+  additional_vim_regex_highlighting = {"latex"},
 })
 
 -- following options are the default
@@ -53,13 +55,6 @@ require'nvim-tree'.setup {
     width = 25,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
-    mappings = {
-      -- custom only false will merge the list with the default mappings
-      -- if true, it will only use your list to set the mappings
-      custom_only = false,
-      -- list of mappings to set on the tree manually
-      list = {}
-    }
   },
 
   git = {
