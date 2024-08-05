@@ -14,22 +14,26 @@ Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'segeljakt/vim-silicon'
 Plug 'psliwka/vim-smoothie'
-Plug 'tpope/vim-repeat'
 Plug 'ggandor/lightspeed.nvim'
-Plug 'gko/vim-coloresque'
-Plug 'sainnhe/everforest'
 Plug 'kevinhwang91/promise-async'
 Plug 'kevinhwang91/nvim-ufo'
+Plug 'dstein64/vim-startuptime'
 
 " Languages
 Plug 'rust-lang/rust.vim'
 Plug 'lervag/vimtex'
 Plug 'arzg/vim-rust-syntax-ext'
-Plug 'eigenfoo/stan-vim'
+" Plug 'eigenfoo/stan-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'kovisoft/slimv' " lisp
 
 " Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" colors
+Plug 'gko/vim-coloresque'
+Plug 'sainnhe/everforest'
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 
 call plug#end()
 
@@ -46,7 +50,7 @@ set rtp+=/opt/homebrew/opt/fzf
 set background=dark
 let g:everforest_background = 'hard'
 colorscheme everforest
-" colorscheme deep
+" colorscheme nordic
 
 " hi Normal guibg=NONE ctermbg=NONE
 " autocmd FileType tex colorscheme one
@@ -87,14 +91,19 @@ let g:gitgutter_log=1
 
 set mouse=a
 
+" lisp parentheses colors
+let g:lisp_rainbow=1
+
+
 
 " coc.nvim node path
-let g:coc_node_path = "/opt/homebrew/bin/node"
+let g:coc_node_path = "/Users/js5013/Library/Caches/fnm_multishells/51867_1717013200380/bin/node"
 " neovim nodejs path
-let g:node_host_prog = "/opt/homebrew/bin/node"
+let g:node_host_prog = "/Users/js5013/Library/Caches/fnm_multishells/51867_1717013200380/bin/node"
 " copilot nodejs path
-let g:copilot_node_command = "/opt/homebrew/bin/node"
-
+let g:copilot_node_command = "/Users/js5013/Library/Caches/fnm_multishells/51867_1717013200380/bin/node"
+" neovim python path
+let g:python3_host_prog = "/opt/homebrew/Caskroom/miniconda/base/envs/main/bin/python"
 
 
 " Window splitting
@@ -122,9 +131,6 @@ let g:rustfmt_autosave = 1
 " Terminal true colors
 set termguicolors
 set t_CO=256
-
-" Python Provider
-let g:python3_host_prog = '/usr/bin/python'
 
 " Latex stuff
 let g:tex_flavor = 'latex'
@@ -176,7 +182,7 @@ let g:completion_trigger_on_delete = 0
 set cmdheight=1
 
 " Less delay
-set timeout timeoutlen=200 ttimeoutlen=50
+set timeout timeoutlen=2000 ttimeoutlen=200
 
 " Undo history
 set undodir=~/.vimdid
@@ -211,10 +217,10 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 " snippets 
 
 " Press Tab and Shift+Tab and navigate around completion selections
-function! s:check_back_space() abort
-  let col = col('.') -1
-  return !col || getline('.')[col - 1] =~ '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') -1
+"   return !col || getline('.')[col - 1] =~ '\s'
+" endfunction
 
 inoremap <silent><expr> <Tab>
   \ coc#pum#visible() ? coc#pum#next(1) :
@@ -224,6 +230,12 @@ inoremap <silent><expr> <S-Tab>
   \ coc#pum#visible() ? coc#pum#prev(1) :
   \ CheckBackspace() ? "\<S-Tab>" :
   \ coc#refresh()
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 
 " Press Enter to select completion items or expand snippets
 inoremap <silent><expr> <cr>
@@ -239,6 +251,9 @@ inoremap <silent> <C-j> <Plug>(copilot-next)
 inoremap <silent> <C-k> <Plug>(copilot-previous)
 inoremap <silent> <C-l> <Plug>(copilot-suggest)
 
+imap <silent><script><expr> <C-s> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
+
 " Use <TAB> for selections ranges.
 nmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
@@ -247,11 +262,6 @@ xmap <silent> <TAB> <Plug>(coc-range-select)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  " if (index(['vim','help'], &filetype) >= 0)
-  "   execute 'h '.expand('<cword>')
-  " else
-  "   call CocAction('doHover')
-  " endif
   if CocAction('hasProvider', 'hover')
     call CocActionAsync('doHover')
   else
@@ -259,8 +269,21 @@ function! s:show_documentation()
   endif
 endfunction
 
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 " Show actions available at this location
 nnoremap <silent> <leader>a <Plug>(coc-codeaction-cursor)
+
+" Remap <C-f> and <C-b> to scroll float windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " have a column for symbols (eg for errors)
 set signcolumn=yes
@@ -308,6 +331,9 @@ au BufNewFile,BufRead *.md setlocal wrap linebreak nolist
 autocmd! BufRead,BufNewFile *.{jsx,jx,js} setlocal filetype=javascript.jsx
 autocmd FileType javascript.jsx setlocal commentstring={/*\ %s\ */}
 
+
+" sort imports on save for python
+autocmd BufWritePre *.py silent! :call CocAction('runCommand', 'python.sortImports')
 
 " Disable formatting for some filetypes
 au BufNewFile,BufRead *.stan,*.vert,*.frag let b:autoformat_autoindent=0
